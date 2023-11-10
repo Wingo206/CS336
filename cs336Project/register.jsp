@@ -13,31 +13,33 @@
 	
 	<body>
 
-		Login Page
+		Register
 
 		<br>
-			<form method="post" action="loginLogic.jsp">
+			<form method="post" action="registerLogic.jsp">
 			
 			<table>
 				<tr>    
-					<td>Email: </td> <td><input type="text" name="usernameInput"></td>
+					<td>Email: </td> <td><input type="text" name="emailInput"></td>
 				</tr>
 				<tr>
 					<td>Password: </td><td><input type="text" name="passwordInput"></td>
 				</tr>
+                <tr>
+					<td>Re-enter your password: </td><td><input type="text" name="passwordInput2"></td>
+				</tr>
+                <tr>
+					<td>First Name: </td><td><input type="text" name="firstNameInput"></td>
+				</tr>
+                <tr>
+					<td>Last Name: </td><td><input type="text" name="lastNameInput"></td>
+				</tr>
 			</table>
-			<input type="submit" value="Login">
+			<input type="submit" value="Create New Account">
 			
 			</form>
 		<br>
 		
-		New member?
-
-		<br>
-			<form method="post" action="register.jsp">
-			<input type="submit" value="Create New Account">
-			</form>
-		<br>
 
 	</body>
 </html>
