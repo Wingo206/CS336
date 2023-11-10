@@ -3,6 +3,7 @@
 ## Prerequisites
 [MySQL Community Server](https://dev.mysql.com/downloads/mysql/)
 - Set password as 'root'
+
 [MySQL Workbench](https://dev.mysql.com/downloads/workbench/)
 
 [VS Code](https://code.visualstudio.com/download)
