@@ -3,6 +3,7 @@
 ## Prerequisites
 [MySQL Community Server](https://dev.mysql.com/downloads/mysql/)
 - Set password as 'root'
+- If you wish to use another username/password for JDBC connection, modify **cs336Project\WEB-INF\classes\com\cs336\pkg\ApplicationDB.java**, and compile with `javac ApplicationDB.java`
 
 [MySQL Workbench](https://dev.mysql.com/downloads/workbench/)
 
@@ -16,5 +17,5 @@
 - Use Community Server Connecter under **SERVERS** to `Create New Server...`
 - Select Apache Tomcat 8.5.50
 - Right click the newly created server to `Add Deployment` of project root directory
-- Right click to `Publish Server (Full)` and `Start Server`
+- Right click to `Publish Server (Full)` so that the server is **(Synchronized)** and `Start Server`
 - Go to `http://localhost:8080/cs336Project/` in web browser
