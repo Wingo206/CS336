@@ -13,9 +13,17 @@
 
 ## Setup
 - Use MySQL Workbench to execute included .sql script to setup database
+
 - Clone repo to VS Code
+
 - Use Community Server Connecter under **SERVERS** to `Create New Server...`
-- Select Apache Tomcat 8.5.50
+- Select **Apache Tomcat 8.5.50**
 - Right click the newly created server to `Add Deployment` of project root directory
 - Right click to `Publish Server (Full)` so that the server is **(Synchronized)** and `Start Server`
+
 - Go to `http://localhost:8080/cs336Project/` in web browser
+
+## Troubleshooting
+- Issues with starting/stopping/restarting Apache Tomcat server
+    - Use `netstat -a -o | grep 8080` to find the pid of services using the localhost:8080 port
+    - Stop it with task manager

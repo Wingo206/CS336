@@ -11,84 +11,48 @@
 </head>
 <body>
 
-	<% String usernameInput = request.getParameter("emailInput"); %>
-	<% String passwordInput = request.getParameter("passwordInput"); %>
-    <% String passwordInput2 = request.getParameter("passwordInput2"); %>
-    <% String firstNameInput = request.getParameter("firstNameInput"); %>
-    <% String lastNameInput = request.getParameter("lastNameInput"); %>
-
-	<% out.println(usernameInput); %>
-	<% out.println(passwordInput); %>
-	<% out.println(passwordInput2); %>
-	<% out.println(firstNameInput); %>
-	<% out.println(lastNameInput); %>
-	
-	<!-- <%--
-		List<String> list = new ArrayList<String>();
-
+	<%
 		try {
-
 			//Get the database connection
 			ApplicationDB db = new ApplicationDB();	
-			Connection con = db.getConnection();	
-			
+			Connection con = db.getConnection();
+
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
-			//Get the combobox from the index.jsp
-			String entity = request.getParameter("price");
-			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
-			String str = "SELECT * FROM sells WHERE price <= " + entity;
-			//Run the query against the database.
-			ResultSet result = stmt.executeQuery(str);
 
-			//Make an HTML table to show the results in:
-			out.print("<table>");
+			//Get parameters from the HTML form at the index.jsp
+			String usernameInput = request.getParameter("usernameInput");
+			String passwordInput = request.getParameter("passwordInput");
+			String firstNameInput = request.getParameter("firstNameInput");
+			String lastNameInput = request.getParameter("lastNameInput");
 
-			//make a row
-			out.print("<tr>");
-			//make a column
-			out.print("<td>");
-			//print out column header
-			out.print("bar");
-			out.print("</td>");
-			//make a column
-			out.print("<td>");
-			out.print("beer");
-			out.print("</td>");
-			//make a column
-			out.print("<td>");
-			out.print("price");
-			out.print("</td>");
-			out.print("</tr>");
 
-			//parse out the results
-			while (result.next()) {
-				//make a row
-				out.print("<tr>");
-				//make a column
-				out.print("<td>");
-				//Print out current bar name:
-				out.print(result.getString("bar"));
-				out.print("</td>");
-				out.print("<td>");
-				//Print out current beer name:
-				out.print(result.getString("beer"));
-				out.print("</td>");
-				out.print("<td>");
-				//Print out current price
-				out.print(result.getString("price"));
-				out.print("</td>");
-				out.print("</tr>");
+			//Make an insert statement for the CustomerAccount table:
+			String insert = "INSERT INTO CustomerAccount(username, password, firstName, lastName)"
+					+ "VALUES (?, ?, ?, ?)";
+			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
+			PreparedStatement ps = con.prepareStatement(insert);
 
-			}
-			out.print("</table>");
+			//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
+			ps.setString(1, usernameInput);
+			ps.setString(2, passwordInput);
+			ps.setString(3, firstNameInput);
+			ps.setString(4, lastNameInput);
 
-			//close the connection.
+			//Run the query against the DB
+			ps.executeUpdate();
+			//Run the query against the DB
+			
+			//Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
 			con.close();
-
-		} catch (Exception e) {
+			out.print("insert succeeded");
+			
+		} catch (Exception ex) {
+			out.print(ex);
+			out.print("insert failed");
 		}
-	--%> -->
+	%>
+
 
 </body>
 </html>

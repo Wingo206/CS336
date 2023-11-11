@@ -20,14 +20,14 @@
 			
 			<table>
 				<tr>    
-					<td>Email: </td> <td><input type="text" name="emailInput"></td>
+					<td>Username: </td> <td><input type="text" name="usernameInput"></td>
 				</tr>
 				<tr>
 					<td>Password: </td><td><input type="text" name="passwordInput"></td>
 				</tr>
-                <tr>
+                <!-- <tr>
 					<td>Re-enter your password: </td><td><input type="text" name="passwordInput2"></td>
-				</tr>
+				</tr> -->
                 <tr>
 					<td>First Name: </td><td><input type="text" name="firstNameInput"></td>
 				</tr>
@@ -39,7 +39,7 @@
 			
 			</form>
 		<br>
-		
+
 
 	</body>
 </html>

@@ -1,0 +1,7 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "cs336Project/WEB-INF/lib/spring-security-crypto-6.1.5.jar",
+        "cs336Project/WEB-INF/lib/argon2-jvm-2.1.jar"
+    ]
+}

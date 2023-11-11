@@ -20,7 +20,7 @@
 			
 			<table>
 				<tr>    
-					<td>Email: </td> <td><input type="text" name="usernameInput"></td>
+					<td>Username: </td> <td><input type="text" name="usernameInput"></td>
 				</tr>
 				<tr>
 					<td>Password: </td><td><input type="text" name="passwordInput"></td>
