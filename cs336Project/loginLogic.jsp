@@ -45,8 +45,6 @@
 
 			// No account found
 			if(result.next() == false) {
-				//close the connection.
-				con.close();
 	
 %>
 <html>
@@ -60,19 +58,15 @@
 </html>
 <%
 				response.setHeader("Refresh", "2; URL=login.jsp"); // like a redirect, but with a delay
-			}
-
-			// check credentials
-			String checkPassword = result.getString("password");
-
-			//close the connection.
-			con.close();
-
-			if(passwordInput.equals(checkPassword)) {
-				// password matches
-				response.sendRedirect("loggedIn.jsp");
 			} else {
-				// password doesn't match
+				// check credentials
+				String checkPassword = result.getString("password");
+	
+				if(passwordInput.equals(checkPassword)) {
+					// password matches
+					response.sendRedirect("loggedIn.jsp");
+				} else {
+					// password doesn't match
 %>
 <html>
 <head>
@@ -84,8 +78,12 @@
 </body>
 </html>
 <%
-				response.setHeader("Refresh", "2; URL=login.jsp"); // like a redirect, but with a delay
+					response.setHeader("Refresh", "2; URL=login.jsp"); // like a redirect, but with a delay
+				}
 			}
+
+			//close the connection.
+			con.close();
 		}
 	} catch (Exception ex) {
 		out.print(ex);
