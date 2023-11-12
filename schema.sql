@@ -27,12 +27,21 @@ DROP TABLE IF EXISTS `customeraccount`;
 CREATE TABLE `customeraccount` (
   `username` varchar(64) NOT NULL,
   `password` varchar(64) NOT NULL,
-  `custId` int NOT NULL AUTO_INCREMENT,
   `firstName` varchar(50) NOT NULL,
   `lastName` varchar(50) NOT NULL,
-  PRIMARY KEY (`custId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `customeraccount`
+--
+
+LOCK TABLES `customeraccount` WRITE;
+/*!40000 ALTER TABLE `customeraccount` DISABLE KEYS */;
+INSERT INTO `customeraccount` VALUES ('','','',''),(',,.',',.',',.',',.,'),('.,','','',''),('tochu','tochu\'sPassword','Tommy','Chu'),('tochu2','tochu2','tochu2','tochu2'),('toushei','toushei\'sPassword','Tommy','Chu');
+/*!40000 ALTER TABLE `customeraccount` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -43,4 +52,4 @@ CREATE TABLE `customeraccount` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-10 19:52:52
+-- Dump completed on 2023-11-11 19:00:07

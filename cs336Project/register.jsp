@@ -8,7 +8,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Travel Reservation</title>
+		<title>Register</title>
 	</head>
 	
 	<body>
@@ -37,6 +37,14 @@
 			</table>
 			<input type="submit" value="Create New Account">
 			
+			</form>
+		<br>
+
+		Already have an account?
+	
+		<br>
+			<form method="get" action="login.jsp">
+			<input type="submit" value="Login">
 			</form>
 		<br>
 
