@@ -16,6 +16,29 @@
 		You are logged in!
 
 		<br>
+			
+
+			 <input type="date" id="date">
+		<br>
+
+		<br>
+	
+		 <!-- Show html form to i) display something, ii) choose an action via a 
+		  | radio button -->
+		<form method="post" action="showTable.jsp">
+			<br>
+				<input type="radio" id="customeraccount" name="flight_type" value="customeraccount">
+				<label for="customeraccount">customeraccount</label><br>
+				<input type="radio" id="round-trip" name="flight_type" value="Round-Trip">
+				<label for="round-trip">Round-Trip</label><br>
+				<input type="radio" id="onew/roundp" name="flight_type" value="One-Way/Round-Trip">
+				<label for="onew/roundp">One-Way/Round-Trip</label>
+			<br>
+		  <input type="submit" value="display" />
+		</form>
+		<br>
+
+		<br>
 			<form method="get" action="login.jsp">
 			
 			<input type="submit" value="Logout">
