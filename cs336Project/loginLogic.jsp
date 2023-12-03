@@ -15,15 +15,15 @@
 		// check if any of the strings were empty
 		if(usernameInput == "" || passwordInput == "") {
 %>
-<html>
-<head>
-	<title>Empty Fields</title>
-</head>
-<body>
-	<h1>Empty Fields</h1>
-	<p>Please fill out all of the fields provided.</p>
-</body>
-</html>
+			<html>
+			<head>
+				<title>Empty Fields</title>
+			</head>
+			<body>
+				<h1>Empty Fields</h1>
+				<p>Please fill out all of the fields provided.</p>
+			</body>
+			</html>
 <%
 			response.setHeader("Refresh", "2; URL=login.jsp"); // like a redirect, but with a delay
 
@@ -47,15 +47,15 @@
 			if(result.next() == false) {
 	
 %>
-<html>
-<head>
-	<title>No Account Found</title>
-</head>
-<body>
-	<h1>Account Not Found</h1>
-	<p>Enter correct username or register new username</p>
-</body>
-</html>
+				<html>
+				<head>
+					<title>No Account Found</title>
+				</head>
+				<body>
+					<h1>Account Not Found</h1>
+					<p>Enter correct username or register new username</p>
+				</body>
+				</html>
 <%
 				response.setHeader("Refresh", "2; URL=login.jsp"); // like a redirect, but with a delay
 			} else {
@@ -64,19 +64,20 @@
 	
 				if(passwordInput.equals(checkPassword)) {
 					// password matches
+					session.setAttribute("user", usernameInput);
 					response.sendRedirect("loggedIn.jsp");
 				} else {
 					// password doesn't match
 %>
-<html>
-<head>
-	<title>Invalid Credentials</title>
-</head>
-<body>
-	<h1>Invalid Credentials</h1>
-	<p>Enter correct password</p>
-</body>
-</html>
+					<html>
+					<head>
+						<title>Invalid Credentials</title>
+					</head>
+					<body>
+						<h1>Invalid Credentials</h1>
+						<p>Username and password don't match</p>
+					</body>
+					</html>
 <%
 					response.setHeader("Refresh", "2; URL=login.jsp"); // like a redirect, but with a delay
 				}

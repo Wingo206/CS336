@@ -13,6 +13,15 @@
 	
 	<body>
 
+		<!-- Testing that logging out removes the "user" session -->
+		<!-- 		
+		<%
+			String name=(String)session.getAttribute("user");
+			out.print("Current user "+ name);
+		%>
+		 -->
+
+
 		Login Page
 
 		<br>

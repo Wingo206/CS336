@@ -4,6 +4,12 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 
 
+<%
+if (request.getParameter("logout") != null) {
+	session.setAttribute("user", null);
+}
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -13,7 +19,12 @@
 	
 	<body>
 
-		You are logged in!
+		You are logged in! 
+		
+		<%
+			String name=(String) session.getAttribute("user");
+			out.print("Hello "+name);
+		%>
 
 		<br>
 			
@@ -38,11 +49,10 @@
 		</form>
 		<br>
 
+			
 		<br>
-			<form method="get" action="login.jsp">
-			
-			<input type="submit" value="Logout">
-			
+			<form method="get" action="logout.jsp">
+				<input type="submit" value="Logout">
 			</form>
 		<br>
 		
