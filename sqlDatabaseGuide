@@ -1,0 +1,16 @@
+
+airlineId:
+11 most popular taken from: https://today.yougov.com/ratings/travel/popularity/airlines/all
+Comprehensive list of airline IDs: https://johnnyjet.com/travel-resources/airline-codes/
+AA - American Airlines
+DL - Delta Airlines
+UA - United
+
+airportId:
+Busiest airports and airport IDs: https://en.wikipedia.org/wiki/List_of_busiest_airports_by_passenger_traffic
+DEL - Delhi, India
+FRA - Frankfurt, Germany
+HND - Tokyo, Japan
+JFK - Los Angeles, United States
+LAX - New York City, United States
+SIN - Singapore

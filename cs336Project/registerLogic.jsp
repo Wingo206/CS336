@@ -40,17 +40,17 @@
 
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
-			//Make a SELECT query from the customeraccount table with the username = usernameInput
-			String str = "SELECT username FROM customeraccount WHERE username = '" + usernameInput + "'";
+			//Make a SELECT query from the account table with the username = usernameInput
+			String str = "SELECT username FROM account WHERE username = '" + usernameInput + "'";
 
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str);
 
 			// No duplicate username
 			if(result.next() == false) {
-				//Make an insert statement for the CustomerAccount table:
-				String insert = "INSERT INTO CustomerAccount(username, password, firstName, lastName)"
-				+ "VALUES (?, ?, ?, ?)";
+				//Make an insert statement for the account table:
+				String insert = "INSERT INTO account(username, password, firstName, lastName, accountType)"
+				+ "VALUES (?, ?, ?, ?, 'customer')";
 				//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 				PreparedStatement ps = con.prepareStatement(insert);
 
@@ -68,15 +68,15 @@
 				con.close();
 
 %>
-<html>
-<head>
-	<title>Account Created</title>
-</head>
-<body>
-	<h1>Account Created</h1>
-	<p>An account for "<%= usernameInput %>" has been successfully created.</p>
-</body>
-</html>
+				<html>
+				<head>
+					<title>Account Created</title>
+				</head>
+				<body>
+					<h1>Account Created</h1>
+					<p>An account for "<%= usernameInput %>" has been successfully created.</p>
+				</body>
+				</html>
 
 
 <%
@@ -90,15 +90,15 @@
 				con.close();
 
 %>
-<html>
-<head>
-	<title>Username Taken</title>
-</head>
-<body>
-	<h1>Username Taken</h1>
-	<p>The username "<%= exists %>" is already taken. Please choose a different one.</p>
-</body>
-</html>
+				<html>
+				<head>
+					<title>Username Taken</title>
+				</head>
+				<body>
+					<h1>Username Taken</h1>
+					<p>The username "<%= exists %>" is already taken. Please choose a different one.</p>
+				</body>
+				</html>
 <%
 
 				response.setHeader("Refresh", "2; URL=register.jsp"); // like a redirect, but with a delay
