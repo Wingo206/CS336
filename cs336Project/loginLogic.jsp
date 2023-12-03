@@ -36,8 +36,8 @@
 			
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
-			//Make a SELECT query from the customeraccount table with the username = usernameInput
-			String str = "SELECT password FROM customeraccount WHERE username = '" + usernameInput + "'";
+			//Make a SELECT query from the account table with the username = usernameInput
+			String str = "SELECT password, accountType FROM account WHERE username = '" + usernameInput + "'";
 
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str);
@@ -49,7 +49,7 @@
 %>
 				<html>
 				<head>
-					<title>No Account Found</title>
+					<title>Account Not Found</title>
 				</head>
 				<body>
 					<h1>Account Not Found</h1>
@@ -61,11 +61,25 @@
 			} else {
 				// check credentials
 				String checkPassword = result.getString("password");
-	
+
 				if(passwordInput.equals(checkPassword)) {
 					// password matches
-					session.setAttribute("user", usernameInput);
-					response.sendRedirect("loggedIn.jsp");
+					
+					// set username for session and accountType for user access
+					session.setAttribute("username", usernameInput);
+
+					String accountType = result.getString("accountType");
+					session.setAttribute("accountType", accountType);
+					
+					
+					if ("admin".equals((String) session.getAttribute("accountType"))) {
+						response.sendRedirect("admin.jsp");
+					}
+					
+					if ("customer".equals((String) session.getAttribute("accountType"))) {
+						response.sendRedirect("loggedIn.jsp");
+					}
+					
 				} else {
 					// password doesn't match
 %>
