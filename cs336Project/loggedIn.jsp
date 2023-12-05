@@ -49,6 +49,11 @@
 		</form>
 		<br>
 
+		<form method="post" action="flightSearch.jsp">
+		<br> 
+			<input type="submit" value="flightSearch" />
+		<br>
+		</form>
 			
 		<br>
 			<form method="get" action="logout.jsp">
