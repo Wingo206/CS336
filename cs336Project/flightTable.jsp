@@ -21,8 +21,8 @@
 				// Create a SQL statement
 				Statement stmt = con.createStatement();
 
-				// Make a SELECT query from the table airport
-				String str = "SELECT * FROM airport";
+				// Make a SELECT query from the table flight
+				String str = "SELECT * FROM flight";
 
 				// Print or log the generated SQL query for debugging purposes
 				out.println("Generated SQL Query: " + str);
@@ -33,55 +33,50 @@
 				// Get metadata to retrieve column names
 				ResultSetMetaData metaData = result.getMetaData();
 				int columnCount = metaData.getColumnCount();
-					
+				 
+				String flightDep = request.getParameter("flightsFrom");
+				String flightArrival = request.getParameter("flightsTo");
+
+				out.println(flightDep); 
+				out.println(flightArrival);
 		%>
 
-		<form method="searchFlight" action="flightTable.jsp">
-		
-			<label> From: </label>
-				<select name = "flightsFrom">
+			<table border="1">
+			<tr>
+				<!-- headers -->
+				<%
+				for (int i = 1; i <= columnCount; i++) {
+					out.println("<th>" + metaData.getColumnName(i) + "</th>");
+				}
+				%>
+			</tr>
 
+			<!-- Parse out the results -->
+			<%
+			while (result.next()) {
+			%>
+				<tr>
+					<!-- data rows -->
 					<%
-					result.beforeFirst();
-					while (result.next()) {
+					if(result.getString(4).equals(flightDep) && result.getString(6).equals(flightArrival) ) {
+						for (int i = 1; i <= columnCount; i++) {
+							out.println("<td>" + result.getString(i) + "</td>");
+						}
+					}
 					%>
-						<% for (int i = 1; i <= columnCount; i++) { %>
-							<% out.println(result.getString(i)); %>
-							<option value ="<%= result.getString(i) %>"><%= result.getString(i) %></option>
+				</tr>
+			
+		<%	}
 
-						<% } %>
-					<% } %>
-
-				</select>
-
-				<label> To: </label>
-				<select name = "flightsTo">
-
-					<%
-					result.beforeFirst();
-					while (result.next()) {
-					%>
-						<% for (int i = 1; i <= columnCount; i++) { %>
-							<% out.println(result.getString(i)); %>
-							<option value ="<%= result.getString(i) %>"><%= result.getString(i) %></option>
-
-						<% } %>
-					<% } %>
-
-				</select>
-				
-				<input type="submit" value="Search!" />
-		</form>  
+	
 		
-	<%
 			// Close the connection and resources
-			db.closeConnection(con);	
-
+			db.closeConnection(con);
 			} catch (Exception e) {
 			// Log the exception instead of printing it to the page
 				e.printStackTrace();
 			}
-	%>
+		%>
 
 	</body>
 </html>
