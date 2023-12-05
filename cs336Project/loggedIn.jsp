@@ -49,11 +49,18 @@
 		</form>
 		<br>
 
-			
-		<br>
-			<form method="get" action="logout.jsp">
-				<input type="submit" value="Logout">
-			</form>
+		<hr>
+
+		<form method="get" action="questions.jsp">
+			<input type="submit" value="View questions page">
+		</form>
+
+		<hr>
+
+		<form method="get" action="logout.jsp">
+			<input type="submit" value="Logout">
+		</form>
+
 		<br>
 		
 	</body>
