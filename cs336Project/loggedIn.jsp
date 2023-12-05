@@ -50,18 +50,19 @@
 		<br>
 
 		<hr>
-
+		<form method="post" action="flightSearch.jsp">
+			<input type="submit" value="flightSearch" />
+		</form>
+			
+		<hr>
 		<form method="get" action="questions.jsp">
 			<input type="submit" value="View questions page">
 		</form>
 
 		<hr>
-
 		<form method="get" action="logout.jsp">
 			<input type="submit" value="Logout">
 		</form>
-
-		<br>
 		
 	</body>
 </html>
