@@ -20,10 +20,14 @@ insert into flight (airline, flownBy, departureAirport, departureTime, arrivalAi
 create table account(username varchar(64) primary key, password varchar(64) not null, firstName varchar(50) not null, lastName varchar(50) not null, accountType varchar(20) not null);
 insert into account(username, password, firstName, lastName, accountType) values ('admin', 'admin', 'Jesus','Christ', 'admin');
 insert into account(username, password, firstName, lastName, accountType) values ('cust', 'cust', 'Test', 'Customer', 'customer');
+insert into account(username, password, firstName, lastName, accountType) values ('cust2', 'cust2', 'Test', 'Customer2', 'customer');
 
 create table flightTicket(ticketID integer primary key auto_increment, totalFare float not null, class varchar(20) not null, changeFee float not null, bookingFee float not null, passenger varchar(64) not null, purchaseDateTime timestamp not null, 
 foreign key(passenger) references account(username));
 insert into flightTicket (totalFare, class, changeFee, bookingFee, passenger, purchaseDateTime) values (630, 'economy', 80, 30, 'cust', NOW());
+insert into flightTicket (totalFare, class, changeFee, bookingFee, passenger, purchaseDateTime) values (630, 'economy', 80, 30, 'cust', NOW());
+
+insert into flightTicket (totalFare, class, changeFee, bookingFee, passenger, purchaseDateTime) values (1000, 'business', 0, 30, 'cust2', NOW());
 
 create table uses(flightNumber integer, ticketId integer, seatNumber varchar(3) not null, 
 primary key (flightNumber, ticketId), foreign key(flightNumber) references flight(flightNumber), foreign key(ticketID) references flightTicket(ticketId));

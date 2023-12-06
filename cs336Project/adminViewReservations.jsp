@@ -39,13 +39,13 @@
 				<td>Customer Name: </td>
 				<td>
 					<select name="customerFilter">
-						<option value = ""></option>
+						<option value = "">[Customer Reset]</option>
 						<%
 						// Get the database connection
 						ApplicationDB db = new ApplicationDB();
 						Connection con = db.getConnection();
-
 						Statement stmt = con.createStatement();
+
 						ResultSet accountResult = stmt.executeQuery("select username, firstName, lastName, accountType from account where accountType = \"customer\"");
 						while(accountResult.next()) {
 							out.println("<option value=" + accountResult.getString("username") + ">" + accountResult.getString("firstName") + " " + accountResult.getString("lastName") + "</option>");
@@ -58,7 +58,7 @@
 				<td>Flight Number: </td>
 				<td>
 					<select name="flightNumberFilter">
-						<option value = ""></option>
+						<option value = "">[Flight Number Reset]</option>
 						<%
 						ResultSet flightNumResult = stmt.executeQuery("select flightNumber from flight");
 						while(flightNumResult.next()) {
