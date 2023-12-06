@@ -13,24 +13,45 @@
 		String passwordInput = request.getParameter("passwordInput");
 		String firstNameInput = request.getParameter("firstNameInput");
 		String lastNameInput = request.getParameter("lastNameInput");
+		String accountTypeInput = request.getParameter("accountTypeInput");
+		String registerFrom = request.getParameter("registerFrom");
 
 		// check if any of the strings were empty
-		if(usernameInput == "" || passwordInput == "" || firstNameInput == "" || lastNameInput == "") {
+		if(usernameInput == "" || passwordInput == "" || firstNameInput == "" || lastNameInput == "" || accountTypeInput == "") {
 %>
 <html>
 <head>
-	<title>Empty Fields</title>
+	<title>Empty Field(s)</title>
 </head>
 <body>
-	<h1>Empty Fields</h1>
+	<h1>Empty Field(s)</h1>
 	<p>Please fill out all of the fields provided.</p>
 </body>
 </html>
-<%
-		response.setHeader("Refresh", "2; URL=register.jsp"); // like a redirect, but with a delay
+<%		
+			String returnURL = "";
 
+			if(registerFrom.equals("registration")) {
+				returnURL = "register";
+			} else if(registerFrom.equals("admin")) {
+				returnURL = "adminManagement";
+			}
+			response.setHeader("Refresh", "2; URL=" + returnURL + ".jsp"); // admin can also create accounts
+						
+		}  else if( !(accountTypeInput.equals("customer") || accountTypeInput.equals("representative")) ) {
+		%>
+					<html>
+					<head>
+						<title>Invalid Account Type</title>
+					</head>
+					<body>
+						<h1>Invalid Account Type</h1>
+						<p>Account Type must be customer or representative</p>
+					</body>
+					</html>
+		<%
+				response.setHeader("Refresh", "2; URL=adminManagement.jsp"); // like a redirect, but with a delay
 		} else {
-
 
 			// catch duplicate usernames
 
@@ -50,7 +71,7 @@
 			if(result.next() == false) {
 				//Make an insert statement for the account table:
 				String insert = "INSERT INTO account(username, password, firstName, lastName, accountType)"
-				+ "VALUES (?, ?, ?, ?, 'customer')";
+				+ "VALUES (?, ?, ?, ?, ?)";
 				//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 				PreparedStatement ps = con.prepareStatement(insert);
 
@@ -59,6 +80,7 @@
 				ps.setString(2, passwordInput);
 				ps.setString(3, firstNameInput);
 				ps.setString(4, lastNameInput);
+				ps.setString(5, accountTypeInput);
 
 				//Run the query against the DB
 				ps.executeUpdate();
@@ -78,9 +100,15 @@
 				</body>
 				</html>
 
-
 <%
-				response.setHeader("Refresh", "2; URL=login.jsp"); // like a redirect, but with a delay
+				String returnURL = "";
+
+				if(registerFrom.equals("registration")) {
+					returnURL = "login";
+				} else if(registerFrom.equals("admin")) {
+					returnURL = "adminManagement";
+				}
+				response.setHeader("Refresh", "2; URL=" + returnURL + ".jsp"); // admin can also create accounts
 
 
 			} else {
@@ -101,9 +129,16 @@
 				</html>
 <%
 
-				response.setHeader("Refresh", "2; URL=register.jsp"); // like a redirect, but with a delay
-			}
+				String returnURL = "";
 
+				if(registerFrom.equals("registration")) {
+					returnURL = "register";
+				} else if(registerFrom.equals("admin")) {
+					returnURL = "adminManagement";
+				}
+				response.setHeader("Refresh", "2; URL=" + returnURL + ".jsp"); // admin can also create accounts
+
+			}
 		}
 
 	} catch (Exception ex) {

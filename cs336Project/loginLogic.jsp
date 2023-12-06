@@ -17,10 +17,10 @@
 %>
 			<html>
 			<head>
-				<title>Empty Fields</title>
+				<title>Empty Field(s)</title>
 			</head>
 			<body>
-				<h1>Empty Fields</h1>
+				<h1>Empty Field(s)</h1>
 				<p>Please fill out all of the fields provided.</p>
 			</body>
 			</html>
@@ -37,7 +37,7 @@
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
 			//Make a SELECT query from the account table with the username = usernameInput
-			String str = "SELECT password, accountType FROM account WHERE username = '" + usernameInput + "'";
+			String str = "SELECT password, accountType FROM account WHERE username = \"" + usernameInput + "\"";
 
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str);
@@ -56,7 +56,9 @@
 					<p>Enter correct username or register new username</p>
 				</body>
 				</html>
-<%
+<%				
+				con.close();
+
 				response.setHeader("Refresh", "2; URL=login.jsp"); // like a redirect, but with a delay
 			} else {
 				// check credentials
@@ -70,8 +72,9 @@
 
 					String accountType = result.getString("accountType");
 					session.setAttribute("accountType", accountType);
-					
-					
+
+					con.close();
+										
 					if ("admin".equals((String) session.getAttribute("accountType"))) {
 						response.sendRedirect("admin.jsp");
 					}
@@ -93,12 +96,11 @@
 					</body>
 					</html>
 <%
+					con.close();
+
 					response.setHeader("Refresh", "2; URL=login.jsp"); // like a redirect, but with a delay
 				}
 			}
-
-			//close the connection.
-			con.close();
 		}
 	} catch (Exception ex) {
 		out.print(ex);
