@@ -50,9 +50,13 @@
 
         <hr>
         <form method="post" action="repAnswerQuestions.jsp">
-            <p>todo</p>
             <input type="submit" value="Answer customer questions">
         </form>
+        
+        <hr>
+		<form method="get" action="logout.jsp">
+			<input type="submit" value="Logout">
+		</form>
     </body>
 
 </head>

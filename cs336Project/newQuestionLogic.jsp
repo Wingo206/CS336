@@ -35,13 +35,16 @@
                 %>
                 <h3>Your question has been posted.</h3>
                 <fieldSet>
-                <legend>Question text</legend>
-                <%
-                out.println("<p>" + questionText + "</p>");
-                %>
+                    <legend>Question text</legend>
+                    <%
+                    out.println("<p>" + questionText + "</p>");
+                    %>
                 </fieldSet>
+                <p>You will be redirected to the questions page shortly.</p>
                 <%
                 db.closeConnection(con);
+
+                response.setHeader("Refresh", "5; URL=questions.jsp");
             }
 
         } catch (Exception e) {

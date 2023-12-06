@@ -68,7 +68,7 @@
                 out.print("No Results");
             } else {
                 %>
-                <table>
+                <table border="1">
                     <tr>
                         <th>QID</th>
                         <th>Question</th>
