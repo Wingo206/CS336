@@ -71,6 +71,7 @@
 				<td>Username: </td> <td><input type="text" name="usernameInput"></td>
 			</tr>
 		</table>
+		<br>
 		<input type="submit" value="Delete Account">
 		
 		</form>

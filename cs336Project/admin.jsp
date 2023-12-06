@@ -42,13 +42,13 @@
 		<br>
 
 		<br>
-			<form method="get" action="logout.jsp">
+			<form method="get" action="adminSalesReport.jsp">
 				<input type="submit" value="View Sales Reports">
 			</form>
 		<br>
 
 		<br>
-			<form method="get" action="logout.jsp">
+			<form method="get" action="adminViewReservations.jsp">
 				<input type="submit" value="View List of Reservations">
 			</form>
 		<br>
