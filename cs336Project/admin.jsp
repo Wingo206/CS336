@@ -7,7 +7,7 @@
 <!-- redirect client to access denied page -->
 <%
 	if (!"admin".equals((String) session.getAttribute("accountType"))) {
-		response.sendRedirect("login.jsp");
+		response.sendRedirect("adminDeny.jsp");
 	}
 %>
 
@@ -21,43 +21,46 @@
 	
 	<body>
 
-		You are logged in! 
+		<!-- You are logged in!  -->
 		
 		<%
 			String username = (String) session.getAttribute("username");
-			out.print("Hello "+ username);
+			String accountType = (String) session.getAttribute("accountType");
+
+			out.println("Logged in as: "+ username + " (" + accountType + ")");
 			
-			String accountType =(String) session.getAttribute("accountType");
-			out.print("Hello "+ accountType);
-
-
 
 		%>
 
 		<br>
-			 <input type="date" id="date">
+
+
+		<br>
+			<form method="get" action="adminManagement.jsp">
+				<input type="submit" value="Manage Customers and Representatives">
+			</form>
 		<br>
 
 		<br>
-	
-		 <!-- Show html form to i) display something, ii) choose an action via a 
-		  | radio button -->
-		<form method="post" action="showTable.jsp">
-			<br>
-				<input type="radio" id="account" name="flight_type" value="account">
-				<label for="account">account</label><br>
-
-				<input type="radio" id="flights" name="flight_type" value="flight">
-				<label for="round-trip">One-Way</label><br>
-				
-				<input type="radio" id="onew/roundp" name="flight_type" value="flight">
-				<label for="onew/roundp">Round-Trip</label>
-			<br>
-		  <input type="submit" value="display" />
-		</form>
+			<form method="get" action="logout.jsp">
+				<input type="submit" value="View Sales Reports">
+			</form>
 		<br>
 
-			
+		<br>
+			<form method="get" action="logout.jsp">
+				<input type="submit" value="View List of Reservations">
+			</form>
+		<br>
+		<!-- list of most active flights -->
+
+		<br>
+			<form method="get" action="logout.jsp">
+				<input type="submit" value="View Revenue Report">
+			</form>
+		<br>
+
+
 		<br>
 			<form method="get" action="logout.jsp">
 				<input type="submit" value="Logout">

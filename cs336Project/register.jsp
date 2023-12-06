@@ -34,6 +34,9 @@
                 <tr>
 					<td>Last Name: </td><td><input type="text" name="lastNameInput"></td>
 				</tr>
+					
+					<input type="hidden" name="accountTypeInput" value = "customer">
+					<input type="hidden" name="registerFrom" value = "registration">
 			</table>
 			<input type="submit" value="Create New Account">
 			

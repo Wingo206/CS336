@@ -17,10 +17,10 @@
 %>
 			<html>
 			<head>
-				<title>Empty Fields</title>
+				<title>Empty Field(s)</title>
 			</head>
 			<body>
-				<h1>Empty Fields</h1>
+				<h1>Empty Field(s)</h1>
 				<p>Please fill out all of the fields provided.</p>
 			</body>
 			</html>
