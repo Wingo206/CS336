@@ -3,7 +3,10 @@
 ## Prerequisites
 [MySQL Community Server](https://dev.mysql.com/downloads/mysql/)
 - Set password as 'root'
-- If you wish to use another username/password for JDBC connection, modify **cs336Project\WEB-INF\classes\com\cs336\pkg\ApplicationDB.java**, and compile with `javac ApplicationDB.java`
+- If you wish to use another username/password for JDBC connection
+    - Go to **cs336Project\WEB-INF\classes\com\cs336\pkg\ApplicationDB.java**
+    - modify `connection = DriverManager.getConnection(connectionUrl,"<username>", "<password>");`
+    - Recompile with `javac ApplicationDB.java`
 
 [MySQL Workbench](https://dev.mysql.com/downloads/workbench/)
 
@@ -12,18 +15,28 @@
 - [Community Server Connectors](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-community-server-connector)
 
 ## Setup
-- Use MySQL Workbench to execute included .sql script to setup database
+1. Clone repo to VS Code
+2. Use MySQL Workbench to execute included .sql script to setup database
+3. Use Community Server Connecter under **SERVERS** to `Create New Server...`
+4. Select **Apache Tomcat 8.5.50**
+5. Right click the newly created server to `Add Deployment` of project root directory
+6. Right click to `Publish Server (Full)` so that the server is **(Synchronized)** and `Start Server`
+7. Go to `http://localhost:8080/cs336Project/` in web browser
 
-- Clone repo to VS Code
+## Startup
+### Customer
+- Register an account through the register page
+- Login through the login page
 
-- Use Community Server Connecter under **SERVERS** to `Create New Server...`
-- Select **Apache Tomcat 8.5.50**
-- Right click the newly created server to `Add Deployment` of project root directory
-- Right click to `Publish Server (Full)` so that the server is **(Synchronized)** and `Start Server`
+### Admin
+- Login with username `admin` and password `admin`
 
-- Go to `http://localhost:8080/cs336Project/` in web browser
+### Customer Representative
+- Create a customer account
+- Login with admin to change account type to `representative`
+
 
 ## Troubleshooting
 - Issues with starting/stopping/restarting Apache Tomcat server
     - Use `netstat -a -o | grep 8080` to find the pid of services using the localhost:8080 port
-    - Stop it with task manager
+    - Terminate the service with task manager
