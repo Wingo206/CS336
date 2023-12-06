@@ -44,7 +44,6 @@
 
         <hr>
         <form method="post" action="repViewFlights.jsp">
-            <p>todo</p>
             <input type="submit" value="View flights for a given airport">
         </form>
 

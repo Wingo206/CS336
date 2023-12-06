@@ -27,7 +27,7 @@
                 <input type="submit" value="Back to representative page"/>
             </form>
             <hr>
-            <h3>Questions</h3>
+            <h3>Answer Questions</h3>
             <form method="post" action="repAnswerQuestions.jsp">
                 <input type="submit" value="Refresh"/>
             </form>
