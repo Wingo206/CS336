@@ -82,6 +82,10 @@
 					if ("customer".equals((String) session.getAttribute("accountType"))) {
 						response.sendRedirect("loggedIn.jsp");
 					}
+
+					if ("representative".equals((String) session.getAttribute("accountType"))) {
+						response.sendRedirect("rep.jsp");
+					}
 					
 				} else {
 					// password doesn't match
