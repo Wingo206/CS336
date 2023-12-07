@@ -43,7 +43,7 @@
 
 		<br>
 			<form method="get" action="adminSalesReport.jsp">
-				<input type="submit" value="View Sales Reports">
+				<input type="submit" value="View Monthly Sales Reports">
 			</form>
 		<br>
 
@@ -55,8 +55,8 @@
 		<!-- list of most active flights -->
 
 		<br>
-			<form method="get" action="logout.jsp">
-				<input type="submit" value="View Revenue Report">
+			<form method="get" action="adminRevenueSummary.jsp">
+				<input type="submit" value="View Revenue Summary">
 			</form>
 		<br>
 

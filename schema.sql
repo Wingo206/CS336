@@ -33,6 +33,8 @@ create table uses(flightNumber integer, ticketId integer, seatNumber varchar(3) 
 primary key (flightNumber, ticketId), foreign key(flightNumber) references flight(flightNumber), foreign key(ticketID) references flightTicket(ticketId));
 insert into uses (flightNumber, ticketId, seatNumber) values (1, 1, 'A01');
 insert into uses (flightNumber, ticketId, seatNumber) values (2, 1, 'A12');
+insert into uses (flightNumber, ticketId, seatNumber) values (1, 2, 'G13');
+
 
 create table inWaitingList(flightNumber integer, airlineId char(2), customer varchar(64), 
 primary key (flightNumber, airlineId, customer), foreign key(flightNumber) references flight(flightNumber), foreign key(airlineId) references airline(airlineId), foreign key(customer) references account(username));
