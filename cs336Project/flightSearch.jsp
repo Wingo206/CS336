@@ -31,17 +31,22 @@
 				String minPrices = request.getParameter("minPrice");
 				String maxPrices = request.getParameter("maxPrice");
 				String airlinePicked = request.getParameter("alines");
-				out.println(datePicked + "hello" + minPrices);
+				String takeOffTime = request.getParameter("takeOff");
+				//takeOffTime = takeOffTime + ":00";
+				String landingTime = request.getParameter("landing");
+				//landingTime = landingTime + ":00";
+				String filterOption = request.getParameter("filter");
+				out.println(landingTime + "hello" + flightDep);
 
 				String str2 = "SELECT * FROM flight WHERE flightNumber > '0'";
 
 				//List of search and filter options 
 				//need to check if they are null or not
-				if(flightDep != "null") {
+				if(flightDep != null && flightDep != "null") {
 					str2 += " AND departureAirport = '" + flightDep + "'";
 				}
 
-				if(flightArrival != "null") {
+				if(flightArrival != null && flightArrival != "null") {
 					str2 += " AND arrivalAirport = '" + flightArrival + "'";
 				}
 
@@ -63,8 +68,23 @@
 					str2 += " AND price < '" + maxPrices + "'";
 				}
 
-				if(airlinePicked != "null") {
+				if(airlinePicked != null && airlinePicked != "null") {
 					str2 += " AND airline = '" + airlinePicked + "'";
+				}
+
+				if(!takeOffTime.equals("")) {
+					str2 += " AND departureTime AS TIME = '" + takeOffTime + "'";	
+				}
+
+				if(!landingTime.equals("")) {
+					str2 += " AND arrivalTime AS TIME = '" + landingTime + "'";	
+				}
+
+
+				//Start the filter conditions here with GroupBy
+				if(filterOption != null && filterOption != "Yes") {
+					out.println("testing");
+					str2 += " ORDER BY price";
 				}
 
 				String str3 = "SELECT * FROM airline";
@@ -95,6 +115,14 @@
 
 			 <label> Maximum Price: </label>
 			 <input type="number" step="0.01" id="maxPrice" name="maxPrice">
+			<br>
+			
+			<br>
+			 <label> Take Off Time: </label>
+			 <input type="time" id="takeOff" name="takeOff">
+
+			 <label> Landing Time: </label>
+			 <input type="time" id="landing" name="landing">
 			<br>
 			
 			<br>
@@ -155,6 +183,14 @@
 					<% } %>
 
 				</select>
+				<br>
+
+				<br>
+				<label> Filter: </label>
+				<input type = "radio" id = "yes" name = "filter" value="Yes">
+				<label for="yes">Yes</label>
+				<input type = "radio" id = "no" name = "filter" value="No">
+				<label for="no">No</label>
 				<br>
 
 				<br>
