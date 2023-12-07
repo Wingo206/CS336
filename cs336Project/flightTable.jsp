@@ -21,8 +21,11 @@
 				// Create a SQL statement
 				Statement stmt = con.createStatement();
 
+				String flightDep = request.getParameter("flightsFrom");
+				String flightArrival = request.getParameter("flightsTo");
+
 				// Make a SELECT query from the table flight
-				String str = "SELECT * FROM flight";
+				String str = "SELECT * FROM flight WHERE departureAirport = '" + flightDep + "' AND arrivalAirport = '" + flightArrival + "'";
 
 				// Print or log the generated SQL query for debugging purposes
 				out.println("Generated SQL Query: " + str);
@@ -33,12 +36,7 @@
 				// Get metadata to retrieve column names
 				ResultSetMetaData metaData = result.getMetaData();
 				int columnCount = metaData.getColumnCount();
-				 
-				String flightDep = request.getParameter("flightsFrom");
-				String flightArrival = request.getParameter("flightsTo");
 
-				out.println(flightDep); 
-				out.println(flightArrival);
 		%>
 
 			<table border="1">
@@ -58,11 +56,11 @@
 				<tr>
 					<!-- data rows -->
 					<%
-					if(result.getString(4).equals(flightDep) && result.getString(6).equals(flightArrival) ) {
+					//if(result.getString(4).equals(flightDep) && result.getString(6).equals(flightArrival) ) {
 						for (int i = 1; i <= columnCount; i++) {
 							out.println("<td>" + result.getString(i) + "</td>");
 						}
-					}
+					//}
 					%>
 				</tr>
 			
