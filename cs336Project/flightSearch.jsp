@@ -37,7 +37,7 @@
 				//landingTime = landingTime + ":00";
 				String numOfStopsString = request.getParameter("maxStops");
 				int numOfStops;
-				if(numOfStopsString == null) {
+				if(numOfStopsString == null || numOfStopsString.equals("")) {
 					numOfStops = 1;
 				} 
 				else {
@@ -70,17 +70,17 @@
 					query = query.substring(0,query.length()-2);
 					query += " FROM flight f1 ";
 					for(int k = 2; k <= i; k++) {
-						query += "JOIN flight f" + k + "ON f" + (k-1) + ".arrivalAirport = f" + k + ".departureAirport ";
+						query += "JOIN flight f" + k + " ON f" + (k-1) + ".arrivalAirport = f" + k + ".departureAirport ";
 					}
 					query += "WHERE f1" + ".departureAirport = '" + flightDep + "' ";
 					query += "AND f" + i + ".arrivalAirport = '" + flightArrival + "' ";
 					for(int k = 2; k <= i; k++) {
-						query += "AND f" + k + ".departureTime > f" + (k-1) + ".arrivalTime";
+						query += "AND f" + k + ".departureTime > f" + (k-1) + ".arrivalTime ";
 					}
-					multiStopQuery += "( " + query + " ) UNION ";
+					multiStopQuery += "( " + query + " ) "+((i == 1)?"t1":"")+" UNION ";
 				}
-					multiStopQuery = multiStopQuery.substring(0, multiStopQuery.length()-6);
-					out.println(multiStopQuery);
+				multiStopQuery = multiStopQuery.substring(0, multiStopQuery.length()-6);
+				out.println(multiStopQuery);
 
 				//List of search and filter options 
 				//need to check if they are null or not
@@ -114,12 +114,12 @@
 					str2 += " AND airline = '" + airlinePicked + "'";
 				}
 
-				if(!takeOffTime.equals(":00")) {
+				if(takeOffTime != null && !takeOffTime.equals(":00")) {
 					str2 += " AND departureTime LIKE '%" + takeOffTime + "%'";
 					//out.println(str2);
 				}
 
-				if(!landingTime.equals("")) {
+				if(landingTime != null && !landingTime.equals("")) {
 					str2 += " AND arrivalTime  LIKE '%" + landingTime + "%'";	
 				}
 
@@ -249,7 +249,8 @@
 		<hr>
 
 		<% 
-				ResultSet result2 = stmt.executeQuery(str2);
+				//ResultSet result2 = stmt.executeQuery(str2);
+				ResultSet result2 = stmt.executeQuery(multiStopQuery);
 				ResultSetMetaData metaData2 = result2.getMetaData();
 				int columnCount2 = metaData2.getColumnCount();
 		%>
