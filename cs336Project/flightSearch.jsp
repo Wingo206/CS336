@@ -32,13 +32,50 @@
 				String maxPrices = request.getParameter("maxPrice");
 				String airlinePicked = request.getParameter("alines");
 				String takeOffTime = request.getParameter("takeOff");
-				//takeOffTime = takeOffTime + ":00";
+				takeOffTime = takeOffTime + ":00";
 				String landingTime = request.getParameter("landing");
 				//landingTime = landingTime + ":00";
+				int numOfStops = Integer.parseInt(request.getParameter("maxStops"));
+
 				String filterOption = request.getParameter("filter");
-				out.println(landingTime + "hello" + flightDep);
+				//out.println(datePicked + "hello" + takeOffTime);
 
 				String str2 = "SELECT * FROM flight WHERE flightNumber > '0'";
+
+				//Generate multistops
+				String[] columns = {"flightNumber", "airline", "flownBy", "departureAirport", "departureTime", "arrivalAirport", "arrivalTime", "price"};
+				String multiStopQuery = "SELECT * FROM ";
+				out.print("hi");
+				numOfStops = 1/0;
+				if(numOfStops == 0) {
+					numOfStops = 1;
+				}
+				for(int i = 1; i <= numOfStops; i++) {
+					String query = "SELECT ";
+					for(int k = 1; k <= numOfStops; k++) {
+						for(int j = 0; j < columns.length; j++) {
+							if(k <= i) {
+								query += "f" + k + "." + columns[j] + " " + columns[j] + k + ", ";
+							}
+							else {
+								query += "NULL AS " + columns[j] + k + ", ";
+							}
+						}
+					}
+					query = query.substring(0,query.length()-2);
+					query += " FROM flight f1 ";
+					for(int k = 2; k <= i; k++) {
+						query += "JOIN flight f" + k + "ON f" + (k-1) + ".arrivalAirport = f" + k + ".departureAirport ";
+					}
+					query += "WHERE f1" + ".departureAirport = '" + flightDep + "' ";
+					query += "AND f" + i + ".arrivalAirport = '" + flightArrival + "' ";
+					for(int k = 2; k <= i; k++) {
+						query += "AND f" + k + ".departureTime > f" + (k-1) + ".arrivalTime";
+					}
+					multiStopQuery += "{ " + query + " } UNION ";
+				}
+					multiStopQuery = multiStopQuery.substring(0, multiStopQuery.length()-6);
+					out.println(multiStopQuery);
 
 				//List of search and filter options 
 				//need to check if they are null or not
@@ -72,12 +109,13 @@
 					str2 += " AND airline = '" + airlinePicked + "'";
 				}
 
-				if(!takeOffTime.equals("")) {
-					str2 += " AND departureTime AS TIME = '" + takeOffTime + "'";	
+				if(!takeOffTime.equals(":00")) {
+					str2 += " AND departureTime LIKE '%" + takeOffTime + "%'";
+					//out.println(str2);
 				}
 
 				if(!landingTime.equals("")) {
-					str2 += " AND arrivalTime AS TIME = '" + landingTime + "'";	
+					str2 += " AND arrivalTime  LIKE '%" + landingTime + "%'";	
 				}
 
 
@@ -107,6 +145,11 @@
 
 			 <label> To: </label>
 			 <input type="date" id="toDate" name="toDate">
+			<br>
+
+			<br>
+			<label> Max Number of Stops: </label>
+			<input type = "number" step="1" id="maxStops" name ="maxStops">
 			<br>
 
 			<br>
