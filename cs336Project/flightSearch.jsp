@@ -35,8 +35,17 @@
 				takeOffTime = takeOffTime + ":00";
 				String landingTime = request.getParameter("landing");
 				//landingTime = landingTime + ":00";
-				int numOfStops = Integer.parseInt(request.getParameter("maxStops"));
-
+				String numOfStopsString = request.getParameter("maxStops");
+				int numOfStops;
+				if(numOfStopsString == null) {
+					numOfStops = 1;
+				} 
+				else {
+					numOfStops = Integer.parseInt(numOfStopsString);
+				}
+				if(numOfStops <= 0 || numOfStops > 5) {
+					numOfStops = 1;
+				}
 				String filterOption = request.getParameter("filter");
 				//out.println(datePicked + "hello" + takeOffTime);
 
@@ -45,11 +54,7 @@
 				//Generate multistops
 				String[] columns = {"flightNumber", "airline", "flownBy", "departureAirport", "departureTime", "arrivalAirport", "arrivalTime", "price"};
 				String multiStopQuery = "SELECT * FROM ";
-				out.print("hi");
-				numOfStops = 1/0;
-				if(numOfStops == 0) {
-					numOfStops = 1;
-				}
+				
 				for(int i = 1; i <= numOfStops; i++) {
 					String query = "SELECT ";
 					for(int k = 1; k <= numOfStops; k++) {
@@ -72,7 +77,7 @@
 					for(int k = 2; k <= i; k++) {
 						query += "AND f" + k + ".departureTime > f" + (k-1) + ".arrivalTime";
 					}
-					multiStopQuery += "{ " + query + " } UNION ";
+					multiStopQuery += "( " + query + " ) UNION ";
 				}
 					multiStopQuery = multiStopQuery.substring(0, multiStopQuery.length()-6);
 					out.println(multiStopQuery);
