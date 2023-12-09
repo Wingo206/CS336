@@ -82,9 +82,15 @@
 						}
 
 					}
-					//if(i == numOfStops) {
-					//query+= "f1.departureTime AS firstDep, f" + numOfStops + ".arrivalTime AS lastArrival, ";
-					//}
+					if(i != numOfStops) {
+						query+= "f1.departureTime AS firstDep, NULL AS lastArrival, ";
+						query += "TIMESTAMPDIFF(HOUR, f1.departureTime, f1.arrivalTime) AS flightDurationInHours, ";
+					}
+					else {
+						query+= "f1.departureTime AS firstDep, f" + numOfStops + ".arrivalTime AS lastArrival, ";
+						query += "TIMESTAMPDIFF(HOUR, f1.departureTime, f" + numOfStops + ".arrivalTime) AS flightDurationInHours, ";
+					}
+					
 					query = query.substring(0,query.length()-2);
 					query += " FROM flight f1 ";
 					for(int k = 2; k <= i; k++) {
