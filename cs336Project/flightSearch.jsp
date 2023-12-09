@@ -47,8 +47,13 @@
 					numOfStops = 1;
 				}
 				String filterOption = request.getParameter("filter");
+				String typeTrip = request.getParameter("typeOfTrip");
+				out.println(typeTrip);
 				//out.println(datePicked + "hello" + takeOffTime);
-
+				if(typeTrip != null && typeTrip == "round") {
+						numOfStops = 2;
+					}
+				
 				String str2 = "SELECT * FROM flight WHERE flightNumber > '0'";
 
 				//Generate multistops
@@ -66,14 +71,37 @@
 								query += "NULL AS " + columns[j] + k + ", ";
 							}
 						}
+
+						if(k == numOfStops) {
+						for(int a = 1; a <= i; a++) {
+							//you have to add sum here
+							query += "f" + a + ".price + ";
+						}
+						query = query.substring(0, query.length()-3);
+						query += " AS totalCost" + ", ";
+						}
+
 					}
+					//if(i == numOfStops) {
+					//query+= "f1.departureTime AS firstDep, f" + numOfStops + ".arrivalTime AS lastArrival, ";
+					//}
 					query = query.substring(0,query.length()-2);
 					query += " FROM flight f1 ";
 					for(int k = 2; k <= i; k++) {
 						query += "JOIN flight f" + k + " ON f" + (k-1) + ".arrivalAirport = f" + k + ".departureAirport ";
 					}
-					query += "WHERE f1" + ".departureAirport = '" + flightDep + "' ";
-					query += "AND f" + i + ".arrivalAirport = '" + flightArrival + "' ";
+
+					if(typeTrip != null && typeTrip == "round") {
+						query += "WHERE f1.departureAirport = '" + flightDep + "' AND f1.arrivalAirport = " + flightArrival + "' ";
+						query += "AND f2.departureAirport = '" + flightArrival + "' AND f2.arrivalAirport = " + flightDep + "' ";
+					}
+					else if(flightDep != null){
+						query += "WHERE f1" + ".departureAirport = '" + flightDep + "' ";
+					}
+					else if(flightArrival != null) {
+						query += "AND f" + i + ".arrivalAirport = '" + flightArrival + "' ";
+					}
+
 					for(int k = 2; k <= i; k++) {
 						query += "AND f" + k + ".departureTime > f" + (k-1) + ".arrivalTime ";
 					}
@@ -133,7 +161,7 @@
 				String str3 = "SELECT * FROM airline";
 
 				// Print or log the generated SQL query for debugging purposes
-				out.println("Generated SQL Query: " + str2);
+				//out.println("Generated SQL Query: " + str2);
 
 				// Run the query against the database
 				ResultSet result3 = stmt.executeQuery(str3);
@@ -155,6 +183,14 @@
 			<br>
 			<label> Max Number of Stops: </label>
 			<input type = "number" step="1" id="maxStops" name ="maxStops">
+			<br>
+
+			<br>
+			<label> Type of Trip: </label>
+			<input type = "radio" id = "round" name = "typeOfTrip" value="round">
+			<label for="round">Round Trip</label>
+			<input type = "radio" id = "oneway" name = "typeOfTrip" value="oneway">
+			<label for="oneway">One Way</label>
 			<br>
 
 			<br>
