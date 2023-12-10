@@ -18,19 +18,16 @@
             String table = request.getParameter("table");
             String column = request.getParameter("column");
             String value = request.getParameter("value");
-            String entryInfo = request.getParameter("entryInfo");
+            String[] entryColumns = request.getParameterValues("entryColumns");
+            String[] entryValues = request.getParameterValues("entryValues");
             String entryConditions = "";
-            while (entryInfo.length() > 0) {
-                int index = entryInfo.indexOf(",!-");
-                entryConditions += entryInfo.substring(0, index) + " = '";
-                entryInfo = entryInfo.substring(index + 3);
-                index = entryInfo.indexOf(",!-");
-                entryConditions += entryInfo.substring(0, index) + "'";
-                entryInfo = entryInfo.substring(index + 3);
-                if (entryInfo.length() > 0) {
+            for (int i = 0; i < entryColumns.length; i++) {
+                entryConditions += entryColumns[i] + " = '"+entryValues[i]+"'";
+                if (i < entryColumns.length - 1) {
                     entryConditions += " AND ";
                 }
             }
+
             String update = "UPDATE "+table+" SET "+column+" = '"+value+"' WHERE " + entryConditions;
             stmt.executeUpdate(update);
 
@@ -42,7 +39,9 @@
             <h3>An Error Occurred.</h3>
             <fieldset>
                 <legend>Error Text</legend>
-                <%out.print(e.getMessage());%>
+                <%
+                out.print(e.getMessage());
+                %>
             </fieldset>
             <form type="post" action="repManageTravel.jsp">
                 <input type="submit" value="Return to Travel Management Page">
