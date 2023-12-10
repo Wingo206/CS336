@@ -45,11 +45,20 @@
                     </tr>
                     <% while (result.next()) {
                         out.print("<tr>");
+                        // used in where by the travel logic to update the correct entry
+                        String entryInfo = "";
+                        for (int j = 1; j <= columnCount; j++) {
+                            // aint no way someone would type these random characters in right?
+                            entryInfo += metaData.getColumnName(j) + ",!-" + result.getString(j) + ",!-";
+                        }
                         for (int i = 1; i <= columnCount; i++) {
 							out.println("<td>" + 
-                                    "<form method=\"post\" action=\"repManageTravelLogic.jsp?column="+metaData.getColumnName(i)+"\">" + 
-                                        "<input type=\"text\" name=\"value\" placeholder="+result.getString(i)+"></input>" +
-                                        "<input type=\"submit\" value=\"Update\"></input>" +
+                                    "<form method='post' action='repManageTravelLogic.jsp'>" + 
+                                        "<input type='hidden' name='table' value='"+table+"''>" + 
+                                        "<input type='hidden' name='column' value="+metaData.getColumnName(i)+">" + 
+                                        "<input type='hidden' name='entryInfo' value="+entryInfo+">" +
+                                        "<input type='text' name='value' placeholder="+result.getString(i)+"></input>" +
+                                        "<input type='submit' value='Update'></input>" +
                                     "</form>" + 
                                 "</td>");
 						}
