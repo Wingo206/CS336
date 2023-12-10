@@ -28,13 +28,18 @@
 				String flightArrival = request.getParameter("flightsTo");
 				String datePicked = request.getParameter("datePicker");
 				String toDatePicked = request.getParameter("toDate");
+				String flexibleD = request.getParameter("flexibleDate");
 				String minPrices = request.getParameter("minPrice");
 				String maxPrices = request.getParameter("maxPrice");
 				String airlinePicked = request.getParameter("alines");
 				String takeOffTime = request.getParameter("takeOff");
 				takeOffTime = takeOffTime + ":00";
+				String takeOffE = request.getParameter("takeOffEnd");
+				takeOffE = takeOffE + ":00";
 				String landingTime = request.getParameter("landing");
 				landingTime = landingTime + ":00";
+				String landingE = request.getParameter("landingEnd");
+				landingE = landingE + ":00";
 				String numOfStopsString = request.getParameter("maxStops");
 				int numOfStops;
 				if(numOfStopsString == null || numOfStopsString.equals("")) {
@@ -163,24 +168,42 @@
 					multiStopQuery += " AND totalCost <= '" + maxPrices + "' ";
 				}
 
-				if(datePicked != "" && toDatePicked != "") {
-					multiStopQuery += " AND firstDep between '" + datePicked + "' AND '" + toDatePicked + "'";
+				if(flexibleD != "" && flexibleD == "flexibleDate") {
+					if(datePicked != "") {
+						//Date flexibleMin = new Date(datePicked);
+						multiStopQuery += " AND firstDep between '" + datePicked + "' AND " + datePicked + "'";	
+					}
+					else if(toDatePicked != "") {
+						multiStopQuery += " AND lastArrival between '" + toDatePicked + "' AND " + toDatePicked + "'";	
+					}
 				}
 				else if(datePicked != "") {
-					multiStopQuery += " AND firstDep > '" + datePicked + "'";	
+					multiStopQuery += " AND firstDep = '" + datePicked + "'";	
 				}
 				else if(toDatePicked != "") {
-					multiStopQuery += " AND firstDep < '" + toDatePicked + "'";
+					multiStopQuery += " AND lastArrival = '" + toDatePicked + "'";
 				}
 
-				if(takeOffTime != null && !takeOffTime.equals(":00")) {
+				if(takeOffE != null && !takeOffE.equals(":00") && takeOffTime != null && !takeOffTime.equals(":00")) {
+					multiStopQuery += " AND firstDep between '%" + takeOffTime.substring(0,2) + ":__:__" + "%' AND '%" + takeOffE.substring(0,2) + ":__:__" + "%'";					
+				}
+				else if(takeOffTime != null && !takeOffTime.equals(":00")) {
 					multiStopQuery += " AND firstDep LIKE '%" + takeOffTime.substring(0,2) + ":__:__" + "%'";
 					//out.println(takeOffTime);
 					//out.println(str2);
 				}
+				else if(takeOffE != null && !takeOffE.equals(":00") ) {
+					multiStopQuery += " AND firstDep LIKE '%" + takeOffE.substring(0,2) + ":__:__" + "%'";					
+				}
 
-				if(landingTime != null && !landingTime.equals(":00")) {
+				if(landingE != null && !landingE.equals(":00") && landingTime != null && !landingTime.equals(":00")) {
+					multiStopQuery += " AND lastArrival between '%" + landingTime.substring(0,2) + ":__:__" + "%' AND '%" + landingE.substring(0,2) + ":__:__" + "%'";					
+				}
+				else if(landingTime != null && !landingTime.equals(":00")) {
 					multiStopQuery += " AND lastArrival LIKE '%" + landingTime.substring(0,2) + ":__:__" + "%'";	
+				}
+				else if(landingE != null && !landingE.equals(":00")) {
+					multiStopQuery += " AND lastArrival LIKE '%" + landingE.substring(0,2) + ":__:__" + "%'";					
 				}
 
 				
@@ -226,6 +249,12 @@
 			<br>
 
 			<br>
+			<label> Flexible Dates: </label>
+			<input type = "radio" id = "flexibleDate" name = "flexibleDate" value="flexibleDate">
+			<label for="flexibleDate"> (+/-3 days) </label>
+			<br>
+
+			<br>
 			<label> Max Number of Stops: </label>
 			<input type = "number" step="1" id="maxStops" name ="maxStops">
 			<br>
@@ -249,9 +278,13 @@
 			<br>
 			 <label> Take Off Time: </label>
 			 <input type="time" id="takeOff" name="takeOff">
+			 <label> - </label>
+			 <input type="time" id="takeOffEnd" name="takeOffEnd">
 
 			 <label> Landing Time: </label>
 			 <input type="time" id="landing" name="landing">
+			 <label> - </label>
+			 <input type="time" id="landingEnd" name="landingEnd">
 			<br>
 			
 			<br>
