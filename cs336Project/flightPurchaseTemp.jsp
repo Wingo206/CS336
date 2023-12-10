@@ -9,6 +9,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Travel Reservation</title>
     <body>
+        <form type="post" action="loggedIn.jsp">
+            <input type="submit" value="Back to logged in"/>
+        </form>
+        <hr>
        <%
         try {
             // Use this to get the flight numbers from the form on flightSearch.jsp

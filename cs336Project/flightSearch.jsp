@@ -20,6 +20,10 @@
 	</head>
 	
 	<body>
+		<form type="post" action="loggedIn.jsp">
+            <input type="submit" value="Back to logged in"/>
+        </form>
+        <hr>
 		<%
 			try {
 				// Get the database connection
