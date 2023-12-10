@@ -20,6 +20,9 @@ insert into flight (airline, flownBy, departureAirport, departureTime, arrivalAi
 insert into flight (airline, flownBy, departureAirport, departureTime, arrivalAirport, arrivalTime, price) values ('UA', 'ua1', 'JFK', '2023-12-26 16:00:00', 'DEL', '2023-12-26 19:00:00', 300.00);
 insert into flight (airline, flownBy, departureAirport, departureTime, arrivalAirport, arrivalTime, price) values ('AA', 'ua1', 'DEL', '2023-12-26 20:00:00', 'LAX', '2023-12-26 23:00:00', 100.00);
 insert into flight (airline, flownBy, departureAirport, departureTime, arrivalAirport, arrivalTime, price) values ('DL', 'ua1', 'HND', '2023-12-26 02:00:00', 'FRA', '2023-12-26 19:00:00', 500.00);
+insert into flight (airline, flownBy, departureAirport, departureTime, arrivalAirport, arrivalTime, price) values ('DL', 'ua1', 'LAX', '2023-12-27 02:00:00', 'JFK', '2023-12-28 19:00:00', 500.00);
+insert into flight (airline, flownBy, departureAirport, departureTime, arrivalAirport, arrivalTime, price) values ('DL', 'ua1', 'FRA', '2023-12-28 02:00:00', 'HND', '2023-12-29 19:00:00', 1000.00);
+insert into flight (airline, flownBy, departureAirport, departureTime, arrivalAirport, arrivalTime, price) values ('DL', 'ua1', 'FRA', '2023-12-28 02:30:00', 'HND', '2023-12-29 19:00:00', 1000.00);
 
 create table account(username varchar(64) primary key, password varchar(64) not null, firstName varchar(50) not null, lastName varchar(50) not null, accountType varchar(20) not null);
 insert into account(username, password, firstName, lastName, accountType) values ('admin', 'admin', 'Jesus','Christ', 'admin');
