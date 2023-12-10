@@ -2,6 +2,8 @@
     pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 
 <!-- redirect client to login page-->
 <%
@@ -71,7 +73,7 @@
 				}
 				String sortOption = request.getParameter("sortList");
 				String typeTrip = request.getParameter("typeOfTrip");
-				out.println(typeTrip);
+				//out.println(typeTrip);
 				//out.println(datePicked + "hello" + takeOffTime);
 				if(typeTrip != null && typeTrip == "round") {
 						numOfStops = 2;
@@ -186,24 +188,51 @@
 					multiStopQuery += " AND totalCost <= '" + maxPrices + "' ";
 				}
 
-				if(flexibleD != "" && flexibleD == "flexibleDate") {
+				if(flexibleD != "" &&  flexibleD != "null") {
 					if(datePicked != "") {
 						//Date flexibleMin = new Date(datePicked);
-						multiStopQuery += " AND firstDep between '" + datePicked + "' AND " + datePicked + "'";	
+						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+						Date dateChosen = dateFormat.parse(datePicked);
+						dateChosen.setDate(dateChosen.getDate() + 3);
+						String incrementedDateUp = dateFormat.format(dateChosen);
+						dateChosen.setDate(dateChosen.getDate() - 6);
+						String incrementedDateLow = dateFormat.format(dateChosen);
+						multiStopQuery += " AND firstDep between '" + incrementedDateLow + "' AND '" + incrementedDateUp + "'";	
 					}
-					else if(toDatePicked != "") {
-						multiStopQuery += " AND lastArrival between '" + toDatePicked + "' AND " + toDatePicked + "'";	
+					if(toDatePicked != "") {
+						SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+						Date dateChosen2 = dateFormat2.parse(toDatePicked);
+						dateChosen2.setDate(dateChosen2.getDate() + 3);
+						String incrementedDateUp2 = dateFormat2.format(dateChosen2);
+						dateChosen2.setDate(dateChosen2.getDate() - 6);
+						String incrementedDateLow2 = dateFormat2.format(dateChosen2);
+						multiStopQuery += " AND lastArrival between '" + incrementedDateLow2 + "' AND '" + incrementedDateUp2 + "'";
 					}
 				}
-				else if(datePicked != "") {
-					multiStopQuery += " AND firstDep = '" + datePicked + "'";	
-				}
-				else if(toDatePicked != "") {
-					multiStopQuery += " AND lastArrival = '" + toDatePicked + "'";
+				else if(true) {
+					if(datePicked != "") {
+						//datePicked = datePicked.stepUp(3);
+						
+						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+						Date dateChosen = dateFormat.parse(datePicked);
+						dateChosen.setDate(dateChosen.getDate() + 1);
+						String incrementedDate = dateFormat.format(dateChosen);
+						multiStopQuery += " AND firstDep >= '" + datePicked + "' AND firstDep < '" + incrementedDate + "'";
+						
+					}
+					if(toDatePicked != "") {
+						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+						Date dateChosen = dateFormat.parse(toDatePicked);
+						dateChosen.setDate(dateChosen.getDate() + 1);
+						String incrementedDate = dateFormat.format(dateChosen);
+						multiStopQuery += " AND firstDep >= '" + toDatePicked + "' AND firstDep < '" + incrementedDate + "'";
+					}
 				}
 
+
 				if(takeOffE != null && !takeOffE.equals(":00") && takeOffTime != null && !takeOffTime.equals(":00")) {
-					multiStopQuery += " AND firstDep between '%" + takeOffTime.substring(0,2) + ":__:__" + "%' AND '%" + takeOffE.substring(0,2) + ":__:__" + "%'";					
+					//multiStopQuery += " AND firstDep between '%" + takeOffTime.substring(0,2) + ":__:__" + "%' AND '%" + takeOffE.substring(0,2) + ":__:__" + "%'";					
+					multiStopQuery += " AND TIME(firstDep) >= '" + takeOffTime + "' AND TIME(firstDep) <= '" +  takeOffE + "'";				
 				}
 				else if(takeOffTime != null && !takeOffTime.equals(":00")) {
 					multiStopQuery += " AND firstDep LIKE '%" + takeOffTime.substring(0,2) + ":__:__" + "%'";
@@ -215,7 +244,8 @@
 				}
 
 				if(landingE != null && !landingE.equals(":00") && landingTime != null && !landingTime.equals(":00")) {
-					multiStopQuery += " AND lastArrival between '%" + landingTime.substring(0,2) + ":__:__" + "%' AND '%" + landingE.substring(0,2) + ":__:__" + "%'";					
+					//multiStopQuery += " AND lastArrival between '%" + landingTime.substring(0,2) + ":__:__" + "%' AND '%" + landingE.substring(0,2) + ":__:__" + "%'";	
+					multiStopQuery += " AND TIME(lastArrival) >= '" + landingTime + "' AND TIME(lastArrival) <= '" +  landingE + "'";
 				}
 				else if(landingTime != null && !landingTime.equals(":00")) {
 					multiStopQuery += " AND lastArrival LIKE '%" + landingTime.substring(0,2) + ":__:__" + "%'";	
@@ -238,7 +268,7 @@
 				
 				//Start the filter conditions here with OrderBy
 				if(sortOption != null) {
-					out.println(sortOption);
+					//out.println(sortOption);
 					multiStopQuery += " ORDER BY " + sortOption;
 				}
 
