@@ -34,7 +34,7 @@
 				String takeOffTime = request.getParameter("takeOff");
 				takeOffTime = takeOffTime + ":00";
 				String landingTime = request.getParameter("landing");
-				//landingTime = landingTime + ":00";
+				landingTime = landingTime + ":00";
 				String numOfStopsString = request.getParameter("maxStops");
 				int numOfStops;
 				if(numOfStopsString == null || numOfStopsString.equals("")) {
@@ -46,7 +46,7 @@
 				if(numOfStops <= 0 || numOfStops > 5) {
 					numOfStops = 1;
 				}
-				String filterOption = request.getParameter("filter");
+				String filterOption = request.getParameter("filterList");
 				String typeTrip = request.getParameter("typeOfTrip");
 				out.println(typeTrip);
 				//out.println(datePicked + "hello" + takeOffTime);
@@ -97,20 +97,56 @@
 						query += "JOIN flight f" + k + " ON f" + (k-1) + ".arrivalAirport = f" + k + ".departureAirport ";
 					}
 
+					query += "WHERE flightNumber > '0'";
+
 					if(typeTrip != null && typeTrip == "round") {
-						query += "WHERE f1.departureAirport = '" + flightDep + "' AND f1.arrivalAirport = " + flightArrival + "' ";
+						query += " AND f1.departureAirport = '" + flightDep + "' AND f1.arrivalAirport = " + flightArrival + "' ";
 						query += "AND f2.departureAirport = '" + flightArrival + "' AND f2.arrivalAirport = " + flightDep + "' ";
 					}
 					else if(flightDep != null){
-						query += "WHERE f1" + ".departureAirport = '" + flightDep + "' ";
+						query += " AND f1" + ".departureAirport = '" + flightDep + "' ";
 					}
 					else if(flightArrival != null) {
-						query += "AND f" + i + ".arrivalAirport = '" + flightArrival + "' ";
+						query += " AND f" + i + ".arrivalAirport = '" + flightArrival + "' ";
 					}
 
 					for(int k = 2; k <= i; k++) {
-						query += "AND f" + k + ".departureTime > f" + (k-1) + ".arrivalTime ";
+						query += " AND f" + k + ".departureTime > f" + (k-1) + ".arrivalTime ";
 					}
+
+					if(minPrices != "") {
+						query += " AND totalCost > '" + minPrices + "' ";
+					}
+
+					if(maxPrices != "") {
+						query += " AND totalCost < '" + maxPrices + "' ";
+					}
+
+					if(datePicked != "" && toDatePicked != "") {
+						query += " AND firstDep between '" + datePicked + "' AND '" + toDatePicked + "'";
+					}
+					else if(datePicked != "") {
+						query += " AND firstDep > '" + datePicked + "'";	
+					}
+					else if(toDatePicked != "") {
+						query += " AND firstDep < '" + toDatePicked + "'";
+					}
+
+					if(takeOffTime != null && !takeOffTime.equals(":00")) {
+						query += " AND firstDep LIKE '%" + takeOffTime + "%'";
+						//out.println(str2);
+					}
+
+					if(landingTime != null && !landingTime.equals(":00")) {
+						query += " AND lastArrival LIKE '%" + landingTime + "%'";	
+					}
+
+					for(int b = 1; b <= i; b++) {
+						if(airlinePicked != null && airlinePicked != "null") {
+							query += " AND f" + b + ".airline = '" + airlinePicked + "'";
+						}
+					}
+
 					multiStopQuery += "( " + query + " ) "+((i == 1)?"t1":"")+" UNION ";
 				}
 				multiStopQuery = multiStopQuery.substring(0, multiStopQuery.length()-6);
@@ -121,47 +157,13 @@
 				if(flightDep != null && flightDep != "null") {
 					str2 += " AND departureAirport = '" + flightDep + "'";
 				}
+ 
 
-				if(flightArrival != null && flightArrival != "null") {
-					str2 += " AND arrivalAirport = '" + flightArrival + "'";
-				}
-
-				if(datePicked != "" && toDatePicked != "") {
-					str2 += " AND departureTime between '" + datePicked + "' AND '" + toDatePicked + "'";
-				}
-				else if(datePicked != "") {
-					str2 += " AND departureTime > '" + datePicked + "'";	
-				}
-				else if(toDatePicked != "") {
-					str2 += " AND departureTime < '" + toDatePicked + "'";
-				}
-
-				if(minPrices != "") {
-					str2 += " AND price > '" + minPrices + "'";
-				}
-
-				if(maxPrices != "") {
-					str2 += " AND price < '" + maxPrices + "'";
-				}
-
-				if(airlinePicked != null && airlinePicked != "null") {
-					str2 += " AND airline = '" + airlinePicked + "'";
-				}
-
-				if(takeOffTime != null && !takeOffTime.equals(":00")) {
-					str2 += " AND departureTime LIKE '%" + takeOffTime + "%'";
-					//out.println(str2);
-				}
-
-				if(landingTime != null && !landingTime.equals("")) {
-					str2 += " AND arrivalTime  LIKE '%" + landingTime + "%'";	
-				}
-
-
+				
 				//Start the filter conditions here with GroupBy
-				if(filterOption != null && filterOption != "Yes") {
-					out.println("testing");
-					str2 += " ORDER BY price";
+				if(filterOption != null) {
+					out.println(filterOption);
+					multiStopQuery += " ORDER BY " + filterOption;
 				}
 
 				String str3 = "SELECT * FROM airline";
@@ -275,18 +277,36 @@
 				</select>
 				<br>
 
+				<%
+				//<br>
+				//<label> Filter: </label>
+				//<input type = "radio" id = "yes" name = "filter" value="Yes">
+				//<label for="yes">Yes</label>
+				//<input type = "radio" id = "no" name = "filter" value="No">
+				//<label for="no">No</label>
+				//<br>
+				%>
+
 				<br>
 				<label> Filter: </label>
-				<input type = "radio" id = "yes" name = "filter" value="Yes">
-				<label for="yes">Yes</label>
-				<input type = "radio" id = "no" name = "filter" value="No">
-				<label for="no">No</label>
+				<select name = "filterList">
+				<option disabled selected value> -- select an option -- </option>
+				<option value = "totalCost">price</option> 
+				<option value = "firstDep">take-off time</option> 
+				<option value = "lastArrival">landing time</option> 
+				<option value = "flightDurationInHours">duration of flight</option> 
+				</select>
 				<br>
 
 				<br>
 				<input type="submit" value="Search!" />
 				<br>
 		</form>  
+		
+		<hr>
+		<form method="get" action="loggedIn.jsp">
+			<input type="submit" value="Purchase">
+		</form>
 
 		<hr>
 
@@ -322,6 +342,9 @@
 					%>
 				</tr>
 
+		<% //replace with purchase.jsp prolly 
+		%>
+		
 	<%
 			} // Close the connection and resources
 			db.closeConnection(con);	
@@ -331,6 +354,7 @@
 				e.printStackTrace();
 			}
 	%>
+		
 
 	</body>
 </html>
