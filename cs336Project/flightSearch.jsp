@@ -9,6 +9,14 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Travel Reservation</title>
+		<style>
+		th, td {
+			padding-top: 10px;
+			padding-bottom: 10px;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+		</style>
 	</head>
 	
 	<body>
@@ -348,42 +356,60 @@
 		<hr>
 
 		<% 
-				//ResultSet result2 = stmt.executeQuery(str2);
-				ResultSet result2 = stmt.executeQuery(multiStopQuery);
-				ResultSetMetaData metaData2 = result2.getMetaData();
-				int columnCount2 = metaData2.getColumnCount();
+			//ResultSet result2 = stmt.executeQuery(str2);
+			result = stmt.executeQuery(multiStopQuery);
+			metaData = result.getMetaData();
+			columnCount = metaData.getColumnCount();
 		%>
-
-		<table border="1">
-			<tr>
-				<!-- headers -->
-				<%
-				for (int i = 1; i <= columnCount2; i++) {
-					out.println("<th>" + metaData2.getColumnName(i) + "</th>");
-				}
-				%>
-			</tr>
-
-			<!-- Parse out the results -->
 			<%
-			while (result2.next()) {
-			%>
-				<tr>
-					<!-- data rows -->
-					<%
-					//if(result.getString(4).equals(flightDep) && result.getString(6).equals(flightArrival) ) {
-						for (int i = 1; i <= columnCount2; i++) {
-							out.println("<td>" + result2.getString(i) + "</td>");
-						}
-					//}
-					%>
-				</tr>
+			boolean showHeaders = true;
+			while (result.next()) {
+				//out.print("<table border='1' style='border-collapse: collapse'>");
+				out.print("<table border='1'>");
+				out.print("<tr>");
+				if (showHeaders) {
+					out.print("<tr>");
+					showHeaders = false;
+				} else {
+					out.print("<tr style='visibility:collapse'>");
+				}
+				out.print("<th></th>");
+				out.print("<th>Total Cost</th>");
+				for (int i = 0; i < columns.length; i++) {
+					out.println("<th>" + columns[i] + "</th>");	
+				}
+				out.print("</tr>");
 
-		<% //replace with purchase.jsp prolly 
-		%>
-		
-	<%
-			} // Close the connection and resources
+				// find amount of flights by going until null
+				int numFlights = 1;
+				while ((numFlights+1) * columns.length < columnCount && result.getString((numFlights+1) * columns.length) != null) {
+					numFlights++;
+				}
+				String formString = "<td rowspan = '"+numFlights+"'>";
+				formString += "<form type='post' action='flightPurchaseTemp.jsp'>";
+				formString += "<input type='hidden' name='flightNumbers' value='";
+				for (int i = 0; i < numFlights; i++) {
+					formString += result.getString(columns.length*i+1) + ",";
+				}
+				formString += "'/>";
+				formString += "<input type='submit' value='Purchase Flight"+((numFlights==1)?"":"s")+" ["+numFlights+"]'></input>";
+				formString += "</form>";
+				formString += "</td>";
+				out.println(formString);
+				out.println("<td rowspan = '"+numFlights+"'>"+result.getString(numOfStops * columns.length + 1)+"</td>");
+				for (int i = 0; i < numFlights; i++) {
+					for (int j = 0; j < columns.length; j++) {
+						out.println("<td>"+result.getString(i * columns.length + j + 1)+"</td>");
+					}
+					out.println("</tr>");
+					out.println("<tr>");
+				}
+				out.print("</table>");
+				out.print("<div style='height: 10px'></div>");
+			}
+			%>
+		<hr>
+		<%
 			db.closeConnection(con);	
 			}
 			 catch (Exception e) {
