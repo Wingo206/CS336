@@ -26,34 +26,11 @@
 			out.print("Hello "+ username);
 			
 			String accountType =(String) session.getAttribute("accountType");
-			out.print("Hello "+ accountType);
+			out.print(" Hello "+ accountType);
 
 
 
 		%>
-
-		<br>
-			 <input type="date" id="date">
-		<br>
-
-		<br>
-	
-		 <!-- Show html form to i) display something, ii) choose an action via a 
-		  | radio button -->
-		<form method="post" action="showTable.jsp">
-			<br>
-				<input type="radio" id="account" name="flight_type" value="account">
-				<label for="account">account</label><br>
-
-				<input type="radio" id="flights" name="flight_type" value="flight">
-				<label for="round-trip">One-Way</label><br>
-				
-				<input type="radio" id="onew/roundp" name="flight_type" value="flight">
-				<label for="onew/roundp">Round-Trip</label>
-			<br>
-		  <input type="submit" value="display" />
-		</form>
-		<br>
 
 		<hr>
 		<form method="post" action="flightSearch.jsp">
