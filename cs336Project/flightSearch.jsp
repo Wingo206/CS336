@@ -180,16 +180,16 @@
 
 				multiStopQuery += ") t1 WHERE true = true";
 
-				if(minPrices != "") {
+				if(minPrices != null && minPrices != "") {
 					multiStopQuery += " AND totalCost >= '" + minPrices + "' ";
 				}
 
-				if(maxPrices != "") {
+				if(maxPrices != null && maxPrices != "") {
 					multiStopQuery += " AND totalCost <= '" + maxPrices + "' ";
 				}
 
-				if(flexibleD != "" &&  flexibleD != "null") {
-					if(datePicked != "") {
+				if(flexibleD != null && flexibleD != "" &&  flexibleD != "null") {
+					if(datePicked != null && datePicked != "") {
 						//Date flexibleMin = new Date(datePicked);
 						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 						Date dateChosen = dateFormat.parse(datePicked);
@@ -199,7 +199,7 @@
 						String incrementedDateLow = dateFormat.format(dateChosen);
 						multiStopQuery += " AND firstDep between '" + incrementedDateLow + "' AND '" + incrementedDateUp + "'";	
 					}
-					if(toDatePicked != "") {
+					if(toDatePicked != null && toDatePicked != "") {
 						SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
 						Date dateChosen2 = dateFormat2.parse(toDatePicked);
 						dateChosen2.setDate(dateChosen2.getDate() + 3);
@@ -210,7 +210,7 @@
 					}
 				}
 				else if(true) {
-					if(datePicked != "") {
+					if(datePicked != null && datePicked != "") {
 						//datePicked = datePicked.stepUp(3);
 						
 						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -220,7 +220,7 @@
 						multiStopQuery += " AND firstDep >= '" + datePicked + "' AND firstDep < '" + incrementedDate + "'";
 						
 					}
-					if(toDatePicked != "") {
+					if(toDatePicked != null && toDatePicked != "") {
 						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 						Date dateChosen = dateFormat.parse(toDatePicked);
 						dateChosen.setDate(dateChosen.getDate() + 1);
