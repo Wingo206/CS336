@@ -23,7 +23,7 @@
             Statement fkStmt = con.createStatement();
             Statement optionsStmt = con.createStatement();
 
-            String[] tables = {"airport", "airline", "aircraft", "flight"};
+            String[] tables = {"airport", "airline", "aircraft", "flight", "flightTicket", "uses"};
             %>
             <form method="post" action="rep.jsp">
                 <input type="submit" value="Back to representative page"/>
@@ -31,7 +31,13 @@
             <hr>
             <h3>Manage Travel Data</h3>
             <%
-            for (String table : tables) {
+            for (int t = 0; t < tables.length; t++) {
+                String table = tables[t];
+                // Special case: add the line lol
+                if (t == 4) {
+                    out.println("<hr>");
+                    out.println("<h3>Edit Customer Flight Reservations</h3>");
+                }
                 out.print("<fieldSet>");
                 out.print("<legend>"+table+"</legend>");
                 String query = "SELECT * FROM " + table;

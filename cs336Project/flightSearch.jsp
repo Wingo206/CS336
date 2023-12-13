@@ -420,11 +420,6 @@
 				<input type="submit" value="Search!" />
 				<br>
 		</form>  
-		
-		<hr>
-		<form method="get" action="loggedIn.jsp">
-			<input type="submit" value="Purchase">
-		</form>
 
 		<hr>
 
@@ -481,7 +476,6 @@
 				out.print("<div style='height: 10px'></div>");
 			}
 			%>
-		<hr>
 		<%
 			db.closeConnection(con);	
 			}
