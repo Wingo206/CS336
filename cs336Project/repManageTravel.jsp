@@ -66,8 +66,11 @@
                         <% for (int i = 1; i <= columnCount; i++) {
                             out.println("<th>" + metaData.getColumnName(i) + "</th>");
                         }%>
+                        <th></th>
                     </tr>
-                    <% while (result.next()) {
+                    <% 
+                    // Display table data
+                    while (result.next()) {
                         out.print("<tr>");
                         // Store info about the current row, add to each form so the logic knows what entry to update
                         String entryInfo = "";
@@ -79,7 +82,8 @@
                             String column = metaData.getColumnName(i);
 							out.println("<td>"); 
                             out.println("<form method='post' action='repManageTravelLogic.jsp'>");
-                            out.println("<input type='hidden' name='table' value='"+table+"''>");
+                            out.println("<input type='hidden' name='action' value='update'>");
+                            out.println("<input type='hidden' name='table' value='"+table+"'>");
                             out.println("<input type='hidden' name='column' value="+column+">");
                             out.println(entryInfo);
 
@@ -99,8 +103,35 @@
                             out.println("</form>");
                             out.println("</td>");
 						}
-                        out.print("</tr>");
-                    }%>
+                        // Extra box for delete option
+                        out.println("<td><form method='post' action='repManageTravelLogic.jsp'>" + 
+                            entryInfo + 
+                            "<input type='hidden' name='table' value='"+table+"'>" + 
+                            "<input type='hidden' name='action' value='delete'>" + 
+                            "<input type='submit' value='delete'>" + 
+                            "</form></td>");
+                        out.println("</tr>");
+                    }
+                    // Add row for new entry
+                    out.println("<tr>");
+                    out.println("<form method='post' action='repManageTravelLogic.jsp'>");
+                    out.println("<input type='hidden' name='action' value='newEntry'>");
+                    out.println("<input type='hidden' name='table' value='"+table+"'>");
+                    for (int i = 1; i <= columnCount; i++) {
+                        String column = metaData.getColumnName(i);
+                        out.println("<td>");
+                        if (!columnToOptionsMap.containsKey(column)) {
+                            out.println("<input type='text' name='value' placeholder="+column+"></input>");
+                        } else {
+                            String optionsHTML = columnToOptionsMap.get(column);
+                            out.println("<select name='value'>"+optionsHTML+"</select>");
+                        }
+                        out.println("</td>");
+                    }
+                    out.println("<td><input type='submit' value='New Entry'></input></td>");
+                    out.println("</form>");
+                    out.println("</tr>");
+                    %>
                 </table>
                 <%
                 out.print("</fieldSet>");
