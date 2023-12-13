@@ -11,13 +11,13 @@ insert into airline (airlineId) values ('DL'),('AA'), ('UA');
 
 create table aircraft(aircraftId varchar(20), airlineId char(2), numSeats integer not null,
 primary key(aircraftId, airlineId), foreign key(airlineId) references airline(airlineId) on update cascade);
-insert into aircraft (aircraftId, airlineId, numSeats) values ('dl1', 'DL', 3), ('dl2', 'DL', 3), ('aa1', 'AA', 2), ('aa2', 'AA', 2), ('ua1', 'UA', 1), ('ua2', 'UA', 1);
+insert into aircraft (aircraftId, airlineId, numSeats) values ('dl1', 'DL', 3), ('dl2', 'DL', 3), ('aa1', 'AA', 2), ('aa2', 'AA', 2), ('ua1', 'UA', 1), ('ua2', 'UA', 2);
 
 
 create table flight(flightNumber integer auto_increment, airline char(2), flownBy varchar(20) not null, departureAirport char(3) not null, departureTime timestamp not null, arrivalAirport char(3) not null, arrivalTime timestamp not null, price float not null,
 primary key(flightNumber, airline), foreign key(departureAirport) references airport(airportId) on update cascade, foreign key(arrivalAirport) references airport(airportId) on update cascade, foreign key(airline) references airline(airlineId) on update cascade, foreign key(flownBy) references aircraft(aircraftId) on update cascade);
 insert into flight (airline, flownBy, departureAirport, departureTime, arrivalAirport, arrivalTime, price) values ('UA', 'ua1', 'JFK', '2023-12-25 12:00:00', 'LAX', '2023-12-25 13:00:00', 400.00);
-insert into flight (airline, flownBy, departureAirport, departureTime, arrivalAirport, arrivalTime, price) values ('UA', 'ua1', 'LAX', '2023-12-26 12:00:00', 'JFK', '2023-12-26 13:00:00', 400.00);
+insert into flight (airline, flownBy, departureAirport, departureTime, arrivalAirport, arrivalTime, price) values ('UA', 'ua2', 'LAX', '2023-12-26 12:00:00', 'JFK', '2023-12-26 13:00:00', 400.00);
 insert into flight (airline, flownBy, departureAirport, departureTime, arrivalAirport, arrivalTime, price) values ('UA', 'ua1', 'JFK', '2023-12-26 16:00:00', 'DEL', '2023-12-26 19:00:00', 300.00);
 insert into flight (airline, flownBy, departureAirport, departureTime, arrivalAirport, arrivalTime, price) values ('AA', 'ua1', 'DEL', '2023-12-26 20:00:00', 'LAX', '2023-12-26 23:00:00', 100.00);
 insert into flight (airline, flownBy, departureAirport, departureTime, arrivalAirport, arrivalTime, price) values ('AA', 'ua1', 'DEL', '2023-12-27 20:00:00', 'HND', '2023-12-28 23:00:00', 100.00);
@@ -45,7 +45,7 @@ insert into uses (flightNumber, airline, ticketId, seatNumber) values (1, 'UA', 
 
 create table inWaitingList(flightNumber integer, airlineId char(2), customer varchar(64), 
 primary key (flightNumber, airlineId, customer), foreign key(flightNumber) references flight(flightNumber) on update cascade, foreign key(airlineId) references airline(airlineId) on update cascade, foreign key(customer) references account(username) on update cascade);
-insert into inWaitingList(flightNumber, airlineId, customer) values (1, 'UA', 'cust');
+insert into inWaitingList(flightNumber, airlineId, customer) values (2, 'UA', 'cust');
 
 create table question(QID integer auto_increment primary key, questionText text not null, reply text, customer varchar(64) not null, customerRep varchar(64),
 foreign key(customer) references account(username) on update cascade, foreign key(customerRep) references account(username) on update cascade);
