@@ -36,11 +36,11 @@ insert into flightTicket (totalFare, class, changeFee, bookingFee, passenger, pu
 
 insert into flightTicket (totalFare, class, changeFee, bookingFee, passenger, purchaseDateTime) values (1000, 'business', 0, 30, 'cust2', NOW());
 
-create table uses(flightNumber integer, ticketId integer, seatNumber varchar(3) not null, 
-primary key (flightNumber, ticketId), foreign key(flightNumber) references flight(flightNumber) on update cascade, foreign key(ticketID) references flightTicket(ticketId) on update cascade);
-insert into uses (flightNumber, ticketId, seatNumber) values (1, 1, 'A01');
-insert into uses (flightNumber, ticketId, seatNumber) values (2, 1, 'A12');
-insert into uses (flightNumber, ticketId, seatNumber) values (1, 2, 'G13');
+create table uses(flightNumber integer, airline char(2), ticketId integer, seatNumber varchar(3) not null, 
+primary key (flightNumber, ticketId), foreign key(flightNumber, airline) references flight(flightNumber, airline) on update cascade, foreign key(ticketID) references flightTicket(ticketId) on update cascade);
+insert into uses (flightNumber, airline, ticketId, seatNumber) values (1, 'UA', 1, 'A01');
+insert into uses (flightNumber, airline, ticketId, seatNumber) values (2, 'UA', 1, 'A12');
+insert into uses (flightNumber, airline, ticketId, seatNumber) values (1, 'UA', 2, 'G13');
 
 
 create table inWaitingList(flightNumber integer, airlineId char(2), customer varchar(64), 

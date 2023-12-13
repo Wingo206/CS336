@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Question Reply</title>
+    <title>Manage Travel Logic</title>
     <body>
         <%
         try {

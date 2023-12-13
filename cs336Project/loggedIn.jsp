@@ -43,6 +43,11 @@
 		</form>
 
 		<hr>
+		<form method="get" action="waitlist.jsp">
+			<input type="submit" value="View your waitlist">
+		</form>
+
+		<hr>
 		<form method="get" action="logout.jsp">
 			<input type="submit" value="Logout">
 		</form>
