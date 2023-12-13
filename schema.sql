@@ -27,6 +27,7 @@ create table account(username varchar(64) primary key, password varchar(64) not 
 insert into account(username, password, firstName, lastName, accountType) values ('admin', 'admin', 'Jesus','Christ', 'admin');
 insert into account(username, password, firstName, lastName, accountType) values ('cust', 'cust', 'Test', 'Customer', 'customer');
 insert into account(username, password, firstName, lastName, accountType) values ('cust2', 'cust2', 'Test', 'Customer2', 'customer');
+insert into account(username, password, firstName, lastName, accountType) values ('binguy', 'binguy', 'IAm', 'aGuy', 'representative');
 
 create table flightTicket(ticketID integer primary key auto_increment, totalFare float not null, class varchar(20) not null, changeFee float not null, bookingFee float not null, passenger varchar(64) not null, purchaseDateTime timestamp not null, 
 foreign key(passenger) references account(username) on update cascade);
@@ -44,6 +45,7 @@ insert into uses (flightNumber, ticketId, seatNumber) values (1, 2, 'G13');
 
 create table inWaitingList(flightNumber integer, airlineId char(2), customer varchar(64), 
 primary key (flightNumber, airlineId, customer), foreign key(flightNumber) references flight(flightNumber) on update cascade, foreign key(airlineId) references airline(airlineId) on update cascade, foreign key(customer) references account(username) on update cascade);
+insert into inWaitingList(flightNumber, airlineId, customer) values (1, 'UA', 'cust');
 
 create table question(QID integer auto_increment primary key, questionText text not null, reply text, customer varchar(64) not null, customerRep varchar(64),
 foreign key(customer) references account(username) on update cascade, foreign key(customerRep) references account(username) on update cascade);

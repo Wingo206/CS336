@@ -32,7 +32,6 @@
 
         <hr>
         <form method="post" action="repManageTravel.jsp">
-            <p>todo</p>
             <input type="submit" value="Manage Travel Data">
         </form>
 
