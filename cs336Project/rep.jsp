@@ -23,22 +23,20 @@
             String accountType = (String) session.getAttribute("accountType");
             out.print("<p>Logged in as: " + username + " (" + accountType + ")</p>");
         %>
-
+<!--
         <hr>
         <form method="post" action="repManageFlights.jsp">
             <p>todo</p>
             <input type="submit" value="Manage Customer Flights">
         </form>
-
+-->
         <hr>
         <form method="post" action="repManageTravel.jsp">
-            <p>todo</p>
             <input type="submit" value="Manage Travel Data">
         </form>
 
         <hr>
         <form method="post" action="repViewWaitList.jsp">
-            <p>todo</p>
             <input type="submit" value="View Waiting list of a flight">
         </form>
 
