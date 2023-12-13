@@ -423,7 +423,7 @@
 		
 		<hr>
 		<form method="get" action="loggedIn.jsp">
-			<input type="submit" value="Purchase">
+			<input type="submit" value="Reserve">
 		</form>
 
 		<hr>
@@ -459,13 +459,14 @@
 					numFlights++;
 				}
 				String formString = "<td rowspan = '"+numFlights+"'>";
-				formString += "<form type='post' action='flightPurchaseTemp.jsp'>";
+				formString += "<form type='post' action='flightReservation.jsp'>";
 				formString += "<input type='hidden' name='flightNumbers' value='";
 				for (int i = 0; i < numFlights; i++) {
 					formString += result.getString(columns.length*i+1) + ",";
 				}
+
 				formString += "'/>";
-				formString += "<input type='submit' value='Purchase Flight"+((numFlights==1)?"":"s")+" ["+numFlights+"]'></input>";
+				formString += "<input type='submit' value='Reserve Flight"+((numFlights==1)?"":"s")+" ["+numFlights+"]'></input>";
 				formString += "</form>";
 				formString += "</td>";
 				out.println(formString);
