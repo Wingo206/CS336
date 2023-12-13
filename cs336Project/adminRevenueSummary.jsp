@@ -176,7 +176,7 @@
 			//out.println("airlineFilter: " + airlineFilter);
 			//out.println("customerFilter: " + customerFilter);
 
-			String str = "select username, firstName, lastName, totalFare, price, uses.flightNumber, departureAirport, arrivalAirport, departureTime, airline, bookingFee from flightticket join uses on flightticket.ticketId = uses.ticketId join flight on flight.flightNumber = uses.flightNumber join account on flightticket.passenger = account.username";
+			String str = "select username, firstName, lastName, totalFare, price, uses.flightNumber, departureAirport, arrivalAirport, departureTime, uses.airline, bookingFee from flightticket join uses on flightticket.ticketId = uses.ticketId join flight on flight.flightNumber = uses.flightNumber join account on flightticket.passenger = account.username";
 
 			String filterTitle = "";
 			if(flightNumberFilter != null && flightNumberFilter != "") {

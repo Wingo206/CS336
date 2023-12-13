@@ -35,6 +35,8 @@ insert into flightTicket (totalFare, class, changeFee, bookingFee, passenger, pu
 insert into flightTicket (totalFare, class, changeFee, bookingFee, passenger, purchaseDateTime) values (630, 'economy', 80, 30, 'cust', NOW());
 
 insert into flightTicket (totalFare, class, changeFee, bookingFee, passenger, purchaseDateTime) values (1000, 'business', 0, 30, 'cust2', NOW());
+insert into flightTicket (totalFare, class, changeFee, bookingFee, passenger, purchaseDateTime) values (1000, 'business', 0, 30, 'cust2', '2023-11-25 02:00:00');
+
 
 create table uses(flightNumber integer, airline char(2), ticketId integer, seatNumber varchar(3) not null, 
 primary key (flightNumber, ticketId), foreign key(flightNumber, airline) references flight(flightNumber, airline) on update cascade, foreign key(ticketID) references flightTicket(ticketId) on update cascade);

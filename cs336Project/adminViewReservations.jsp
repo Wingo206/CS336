@@ -79,7 +79,7 @@
 		<br>
 	
 		<%
-			String str = "select username, firstName, lastName, flight.flightNumber, seatNumber, airline, flownBy, departureAirport, arrivalAirport, departureTime, arrivalTime from flightTicket join account on flightTicket.passenger = account.username join uses on flightTicket.ticketId = uses.ticketId join flight on uses.flightNumber = flight.flightNumber";
+			String str = "select username, firstName, lastName, flight.flightNumber, seatNumber, uses.airline, flownBy, departureAirport, arrivalAirport, departureTime, arrivalTime from flightTicket join account on flightTicket.passenger = account.username join uses on flightTicket.ticketId = uses.ticketId join flight on uses.flightNumber = flight.flightNumber";
 			
 			String usernameFilter = request.getParameter("customerFilter");
 			String flightNumberFilter = request.getParameter("flightNumberFilter");
