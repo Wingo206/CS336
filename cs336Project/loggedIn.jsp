@@ -78,14 +78,10 @@
 			/*out.println("<script>Window.onload = () => {"+
 					"alert(\"Your waitlisted flights have available seats!\");"+
 				"}</script>");*/
-			out.println("<script>"+
-					"setTimeout(() => {" + 
-						"alert(\"Your waitlisted flights have available seats!\");" +
-					"}, 100);" + 
-				"</script>");
+			
 			%>
 			
-			<%out.println("<legend>Your waitlisted flights have available seats!</legend>");%>
+			<%out.println("<legend>Waitlist preview</legend>");%>
 			<table border="1">
 				<tr>
 					<% for (int i = 1; i <= columnCount; i++) {
@@ -96,6 +92,15 @@
 					out.print("<tr>");
 					for (int i = 1; i <= columnCount; i++) {
 						out.println("<td>" + result.getString(i) + "</td>");
+						if (i == 3) {
+							if (Integer.parseInt(result.getString(i)) > 0) {
+								out.println("<script>"+
+					"setTimeout(() => {" + 
+						"alert(\"Your waitlisted flights have available seats!\");" +
+					"}, 100);" + 
+				"</script>");
+							}
+						}
 					}
 					out.print("</tr>");
 				}%>

@@ -44,7 +44,7 @@
                 ResultSet rs = ps.executeQuery();
 
                 // Check if the flight is full
-                String fullCheck = "SELECT * FROM ( SELECT f.flightNumber, f.airline FROM flight f JOIN ( SELECT flightNumber, airline, COUNT(*) numPassengers FROM uses GROUP BY flightNumber, airline) t ON f.flightNumber = t.flightNumber AND f.airline = t.airline JOIN aircraft a ON f.flownBy = a.aircraftId WHERE a.numSeats < numPassengers) flightFull WHERE flightFull.flightNumber = " + flightNumber;
+                String fullCheck = "SELECT * FROM ( SELECT f.flightNumber, f.airline FROM flight f JOIN ( SELECT flightNumber, airline, COUNT(*) numPassengers FROM uses GROUP BY flightNumber, airline) t ON f.flightNumber = t.flightNumber AND f.airline = t.airline JOIN aircraft a ON f.flownBy = a.aircraftId WHERE a.numSeats <= numPassengers) flightFull WHERE flightFull.flightNumber = " + flightNumber;
                 Statement fullCheckStmt = con.createStatement();
                 ResultSet fullCheckResult = fullCheckStmt.executeQuery(fullCheck);
                 if (fullCheckResult.next()) {
