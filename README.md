@@ -17,13 +17,16 @@
 ## Setup
 1. Clone repo to VS Code
 2. Use MySQL Workbench to execute the included **schema.sql** script to setup database
-    2a. If you already have a database named "cs336db":
-    2b. login to the MySQL Command Line Client and run `drop database cs336db;`
-3. Use Community Server Connecter under **SERVERS** to `Create New Server...`
-4. Select **Apache Tomcat 8.5.50**
-5. Right click the newly created server to `Add Deployment` of project root directory
-6. Right click to `Publish Server (Full)` so that the server is **(Synchronized)** and `Start Server`
-7. Go to `http://localhost:8080/cs336Project/` in web browser
+   
+    2a. If don't already have a database named "cs336db":
+
+    2b. Remove the first `drop database cs336db;` line in **schema.sql** and rerun the script in MySQL Workbench
+   
+4. Use Community Server Connecter under **SERVERS** to `Create New Server...`
+5. Select **Apache Tomcat 8.5.50**
+6. Right click the newly created server to `Add Deployment` of project root directory
+7. Right click to `Publish Server (Full)` so that the server is **(Synchronized)** and `Start Server`
+8. Go to `http://localhost:8080/cs336Project/` in web browser
 
 ## Startup
 ### Customer
