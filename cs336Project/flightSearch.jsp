@@ -119,7 +119,7 @@
 					if(flightDep != null){
 						roundTripQuery += " AND f1" + ".departureAirport = '" + flightDep + "' ";
 					}
-					else if(flightArrival != null) {
+					if(flightArrival != null) {
 						roundTripQuery += " AND f1" + ".arrivalAirport = '" + flightArrival + "' ";
 					}
 
@@ -169,7 +169,7 @@
 						if(flightDep != null){
 							query += " AND f1" + ".departureAirport = '" + flightDep + "' ";
 						}
-						else if(flightArrival != null) {
+						if(flightArrival != null) {
 							query += " AND f" + i + ".arrivalAirport = '" + flightArrival + "' ";
 						}
 

@@ -57,18 +57,18 @@
 			"SELECT w.flightNumber, w.airlineId, hasSpace.numEmptySeats numEmptySeats " + 
 			"FROM inWaitingList w " + 
 			"JOIN (" +
-				"SELECT f.flightNumber, f.airline, numSeats - numPassengers numEmptySeats " + 
+				"SELECT f.flightNumber, f.airline, numSeats - IF (IFNULL(numPassengers, 0 ) = 0, 0, numPassengers) numEmptySeats " + 
 				"FROM flight f " + 
-				"JOIN (" + 
+				"LEFT OUTER JOIN (" + 
 					"SELECT flightNumber, airline, COUNT(*) numPassengers " + 
 					"FROM uses " + 
 					"GROUP BY flightNumber, airline " +
 				") t ON f.flightNumber = t.flightNumber AND f.airline = t.airline " +
 				"JOIN aircraft a ON f.flownBy = a.aircraftId " +
-				"WHERE a.numSeats > numPassengers " +
+				//"WHERE a.numSeats > numPassengers " +
 			") hasSpace " +
 			"ON hasSpace.flightNumber = w.flightNumber AND hasSpace.airline = w.airlineId " +
-			"WHERE w.customer = 'cust'";
+			"WHERE w.customer = '" + username + "' ";
 		ResultSet result = stmt.executeQuery(query);
 		ResultSetMetaData metaData = result.getMetaData();
 		int columnCount = metaData.getColumnCount();
