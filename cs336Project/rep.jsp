@@ -31,6 +31,11 @@
         </form>
 -->
         <hr>
+        <form method="post" action="flightSearch.jsp">
+            <input type="submit" value="Make reservation for a customer">
+        </form>
+
+        <hr>
         <form method="post" action="repManageTravel.jsp">
             <input type="submit" value="Manage Travel Data">
         </form>

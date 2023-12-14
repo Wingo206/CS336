@@ -33,6 +33,16 @@
         </form>
         <hr>
 		<%
+			String accountType = (String) session.getAttribute("accountType");
+			if (accountType.equals("representative")) {
+				%>
+				<h3>You are signed in as a representative. You can make a reservation for a customer.</h3>
+				<form type="post" action="rep.jsp">
+					<input type="submit" value="Back to rep"/>
+				</form>
+				<hr>
+				<%
+			}
 			try {
 				// Get the database connection
 				ApplicationDB db = new ApplicationDB();
@@ -457,10 +467,11 @@
 				formString += "<form type='post' action='flightReservation.jsp'>";
 				formString += "<input type='hidden' name='flightNumbers' value='";
 				for (int i = 0; i < numFlights; i++) {
-					formString += result.getString(columns.length*i+1) + ",";
+					formString += result.getString(columns.length*i+1) + "," + result.getString(columns.length*i+2) + ", ";
 				}
 
 				formString += "'/>";
+				formString += "<input type='hidden' name='totalCost' value='"+result.getString(numOfStops * columns.length + 1)+"'>";
 				formString += "<input type='submit' value='Reserve Flight"+((numFlights==1)?"":"s")+" ["+numFlights+"]'></input>";
 				formString += "</form>";
 				formString += "</td>";

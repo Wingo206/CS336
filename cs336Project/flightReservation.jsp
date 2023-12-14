@@ -21,17 +21,26 @@
             Statement stmt = con.createStatement();
 
             String flightNumStrings = request.getParameter("flightNumbers");
+            String flightNumStringsOG = flightNumStrings;
+            String totalCost = request.getParameter("totalCost");
             ArrayList<Integer> flightNums = new ArrayList<Integer>();
+            ArrayList<String> flightAirlines = new ArrayList<String>();
             while (flightNumStrings.indexOf(',') != -1) {
                 int i = flightNumStrings.indexOf(',');
                 flightNums.add(Integer.parseInt(flightNumStrings.substring(0, i)));
                 flightNumStrings = flightNumStrings.substring(i+1);
+                i = flightNumStrings.indexOf(',');
+                flightAirlines.add(flightNumStrings.substring(0, i));
+                flightNumStrings = flightNumStrings.substring(i+1);
             }
             boolean canReserve = true;
-            for (Integer flightNumber : flightNums) {
-                String query = "SELECT * FROM flight WHERE flightNumber = ?";
+            for (int i = 0; i < flightNums.size(); i++) {
+                int flightNumber = flightNums.get(i);
+                String airline = flightAirlines.get(i);
+                String query = "SELECT * FROM flight WHERE flightNumber = ? AND airline = ?";
                 PreparedStatement ps = con.prepareStatement(query);
                 ps.setInt(1, flightNumber);
+                ps.setString(2, airline);
                 ResultSet rs = ps.executeQuery();
 
                 // Check if the flight is full
@@ -64,11 +73,37 @@
                 rs.close();
                 ps.close();
                 }
-            %>
+
+                %>
+
+           
             <hr>
             <%if (canReserve) {%>
                 <form action="flightPurchase.jsp" method="post">
-                    <input type='hidden' name='flightNumbers' value='<%out.print(flightNumStrings);%>'>
+                    <input type='hidden' name='flightNumbers' value='<%out.print(flightNumStringsOG);%>'>
+                    <input type='hidden' name='totalCost' value='<%out.print(totalCost);%>'>
+                    <%
+                    String accountType = (String) session.getAttribute("accountType");
+                    if (accountType != null && accountType.equals("customer")) {
+                        out.print("<input type='hidden' name='passenger' value='"+(String)session.getAttribute("username")+"'>"); 
+                    } else {
+                        // query customers for dropdown
+                        String usernameQuery = "SELECT username FROM account WHERE accountType = 'customer'";
+                        Statement usernameStmt = con.createStatement();
+                        ResultSet usernameResult = usernameStmt.executeQuery(usernameQuery);
+                        out.println("<select name='passenger'>");
+                        while (usernameResult.next()) {
+                            String uname = usernameResult.getString(1);
+                            out.println("<option value='"+uname+"'>"+uname+"</option>");
+                        }
+                        out.println("</select>");   
+                    }%>
+                    <select name='flightClass'>
+                        <option disabled selected value> -- select an option -- </option>
+                        <option value = "Economy">Economy</option> 
+                        <option value = "Business">Business + 350</option> 
+                        <option value = "first-class">First Class + 800</option> 
+                    </select>
                     <input type="submit" value="Purchase Flight">
                 </form>
 
