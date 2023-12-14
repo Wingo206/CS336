@@ -37,9 +37,7 @@
 - Login with username `admin` and password `admin`
 
 ### Customer Representative
-- Create a customer account
-- Login with admin to change account type to `representative`
-
+- Login with admin to "Manage Customers and Representatives" and create account as a `representative`
 
 ## Troubleshooting
 - Issues with starting/stopping/restarting Apache Tomcat server
