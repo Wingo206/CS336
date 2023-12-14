@@ -103,16 +103,17 @@
 			<%
 		}
 		%>
-		<hr>
-		<form method="get" action="logout.jsp">
-			<input type="submit" value="Logout">
-		</form>
 
 		<hr>
 		<form method = "get" action ="viewTickets.jsp">
 			<input type ="submit" value="View Tickets">
 		</form>
 		
+		<hr>
+		<form method="get" action="logout.jsp">
+			<input type="submit" value="Logout">
+		</form>
+
 		<%
             db.closeConnection(con);
 		} catch (Exception e) {

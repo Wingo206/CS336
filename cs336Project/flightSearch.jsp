@@ -282,7 +282,7 @@
 					multiStopQuery += " ORDER BY " + sortOption;
 				}
 
-				out.println(multiStopQuery);
+				//out.println(multiStopQuery);
 
 				String str3 = "SELECT * FROM airline";
 
@@ -467,7 +467,7 @@
 				formString += "<form type='post' action='flightReservation.jsp'>";
 				formString += "<input type='hidden' name='flightNumbers' value='";
 				for (int i = 0; i < numFlights; i++) {
-					formString += result.getString(columns.length*i+1) + "," + result.getString(columns.length*i+2) + ", ";
+					formString += result.getString(columns.length*i+1) + "," + result.getString(columns.length*i+2) + ",";
 				}
 
 				formString += "'/>";

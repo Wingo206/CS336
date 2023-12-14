@@ -60,7 +60,7 @@
                 } else {
                     // Displaying flight details
                     if (rs.next()) {
-                        out.println("<h3>Details for flight " + rs.getString("flightNumber") + ". Here are your flight details: </h3>");
+                        out.println("<h3>Details for flight " + rs.getString("flightNumber") + " "+airline+".</h3>");
                         out.println("<p>Flight Number: " + rs.getString("flightNumber") + "</p>");
                         out.println("<p>Airline: " + rs.getString("airline") + "</p>");
                         out.println("<p>Departure Airport: " + rs.getString("departureAirport") + "</p>");
@@ -99,7 +99,6 @@
                         out.println("</select>");   
                     }%>
                     <select name='flightClass'>
-                        <option disabled selected value> -- select an option -- </option>
                         <option value = "Economy">Economy</option> 
                         <option value = "Business">Business + 350</option> 
                         <option value = "first-class">First Class + 800</option> 
